@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>کلاس‌های فوق‌برنامه</title>
+<style>
+:root{
+  --bg:#f2f6f7;--card:#fff;--card2:#f7fafa;--tx:#14262b;--mut:#5a6d73;--bd:#e2eaec;
+  --pri:#0e8a8c;--pri2:#e3f4f3;--pri3:#0a6c6e;--grad:linear-gradient(135deg,#0e8a8c 0%,#1fb5a1 100%);
+  --red:#d3425b;--red2:#fdecef;--grn:#1b9a5f;--grn2:#e4f6ec;--amb:#d98a0b;--amb2:#fdf3de;--blu:#3b6fd8;--blu2:#e8effd;--vio:#7a56d6;--vio2:#f0ebfc;
+  --sh:0 1px 2px rgba(20,38,43,.05),0 6px 20px rgba(20,38,43,.06);--sh2:0 10px 40px rgba(20,38,43,.18);
+  --r:20px;--ease:cubic-bezier(.22,.8,.3,1);
+  --font:Vazirmatn,"Vazir","IRANSansX","IRANSans","Noto Sans Arabic UI","Noto Sans Arabic","SF Arabic","Geeza Pro","Segoe UI",Tahoma,system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0b171a;--card:#132327;--card2:#182b30;--tx:#e8f1f2;--mut:#9db3b8;--bd:#223a40;
+  --pri:#3cc5b8;--pri2:#16393b;--pri3:#7fe0d6;--grad:linear-gradient(135deg,#0b6f72 0%,#17a08f 100%);
+  --red:#ff7a8e;--red2:#3a1d25;--grn:#4cd48e;--grn2:#143325;--amb:#f2b24a;--amb2:#3a2d12;--blu:#7fa6ff;--blu2:#1b2a4a;--vio:#b49cff;--vio2:#2a2145;
+  --sh:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);--sh2:0 10px 40px rgba(0,0,0,.6)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+html{background:var(--bg)}
+body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.65;-webkit-font-smoothing:antialiased;padding:0 0 env(safe-area-inset-bottom)}
+input,button,select,textarea{font-family:inherit;font-size:16px;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+b{font-weight:700}
+#app{max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;position:relative}
+.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--pri) 55%,transparent);outline-offset:2px}
+
+/* ---------- صفحه‌ی اصلی ---------- */
+.hero{background:var(--grad);color:#fff;padding:calc(26px + env(safe-area-inset-top)) 22px 74px;border-radius:0 0 34px 34px;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.1)}
+.hero::before{width:220px;height:220px;top:-90px;left:-70px}
+.hero::after{width:150px;height:150px;bottom:-70px;right:-40px;background:rgba(255,255,255,.08)}
+.hero h1{margin:0;font-size:25px;font-weight:800;letter-spacing:-.2px;position:relative}
+.hero .today{margin-top:4px;font-size:14px;opacity:.9;display:flex;align-items:center;gap:6px;position:relative}
+.hero .today .i{width:17px;height:17px}
+.chips{display:flex;gap:10px;margin:-48px 18px 0;position:relative;z-index:2}
+.chip{flex:1;background:var(--card);border-radius:18px;padding:12px 14px;box-shadow:var(--sh);border:1px solid var(--bd);min-width:0}
+.chip small{display:block;color:var(--mut);font-size:12.5px}
+.chip b{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.d b{color:var(--red)}
+.banner{margin:14px 18px 0;background:var(--amb2);color:var(--amb);border-radius:16px;padding:11px 14px;display:flex;gap:10px;align-items:center;font-size:14px;border:1px solid color-mix(in srgb,var(--amb) 25%,transparent);cursor:pointer;width:calc(100% - 36px);text-align:start}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:18px;width:100%}
+.tile{aspect-ratio:1/.92;background:var(--card);border:1px solid var(--bd);border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-weight:700;font-size:16px;color:var(--tx);box-shadow:var(--sh);transition:transform .18s var(--ease),box-shadow .18s;animation:rise .5s var(--ease) both}
+.tile:active{transform:scale(.95)}
+.tile .bub{width:62px;height:62px;border-radius:22px;display:grid;place-items:center;transition:transform .25s var(--ease)}
+.tile .bub .i{width:30px;height:30px;stroke-width:1.7}
+.tile:hover .bub{transform:rotate(-6deg) scale(1.06)}
+.t-classes .bub{background:var(--pri2);color:var(--pri)}.t-students .bub{background:var(--blu2);color:var(--blu)}
+.t-pay .bub{background:var(--grn2);color:var(--grn)}.t-debt .bub{background:var(--red2);color:var(--red)}
+.t-dash .bub{background:var(--vio2);color:var(--vio)}.t-backup .bub{background:var(--amb2);color:var(--amb)}
+.tile:nth-child(1){animation-delay:.02s}.tile:nth-child(2){animation-delay:.06s}.tile:nth-child(3){animation-delay:.1s}
+.tile:nth-child(4){animation-delay:.14s}.tile:nth-child(5){animation-delay:.18s}.tile:nth-child(6){animation-delay:.22s}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* ---------- سربرگ و صفحه‌ها ---------- */
+header{position:sticky;top:0;z-index:5;background:var(--grad);color:#fff;display:flex;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top)) 14px 14px;box-shadow:0 6px 22px rgba(14,138,140,.25)}
+header h2{margin:0;font-size:18px;font-weight:800;flex:1}
+header .bk{background:rgba(255,255,255,.2);border:0;color:#fff;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;backdrop-filter:blur(6px);transition:transform .15s}
+header .bk:active{transform:scale(.9)}
+main{flex:1;padding:16px 16px 40px;animation:slide .35s var(--ease) both}
+@keyframes slide{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.card>b:first-child,.card .ttl{display:flex;align-items:center;gap:8px;font-size:15.5px;margin-bottom:2px}
+.card .ttl .i{width:19px;height:19px;color:var(--pri)}
+label{display:block;font-size:13px;font-weight:600;color:var(--mut);margin:12px 2px 6px}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--bd);border-radius:14px;background:var(--card2);color:var(--tx);transition:border-color .15s,box-shadow .15s,background .15s;min-height:48px}
+input::placeholder{color:color-mix(in srgb,var(--mut) 70%,transparent)}
+input:focus,select:focus{outline:0;border-color:var(--pri);background:var(--card);box-shadow:0 0 0 4px color-mix(in srgb,var(--pri) 18%,transparent)}
+input[readonly]{cursor:pointer}
+select{appearance:none;-webkit-appearance:none;padding-inline-end:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a9da2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 12px center;background-size:20px}
+input[type=file]{padding:10px;min-height:0;margin-top:10px}
+input[type=file]::file-selector-button{border:0;background:var(--pri2);color:var(--pri3);border-radius:10px;padding:8px 14px;margin-inline-end:10px;font-family:inherit;font-weight:700}
+.btn{background:var(--grad);color:#fff;border:0;border-radius:14px;padding:12px 18px;font-weight:700;min-height:48px;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 16px rgba(14,138,140,.28);transition:transform .15s var(--ease),filter .15s}
+.btn:active{transform:scale(.96);filter:brightness(.96)}
+.btn.gr{background:var(--pri2);color:var(--pri3);box-shadow:none}
+.btn.red{background:linear-gradient(135deg,#d3425b,#e8607a);box-shadow:0 6px 16px rgba(211,66,91,.28)}
+.btn.block{width:100%}
+.btn .i{width:20px;height:20px}
+.row{display:flex;gap:10px;margin-top:14px}.row>*{flex:1}
+.inl{display:flex;gap:10px}.inl input{flex:1}.inl .btn{flex:none}
+.muted{color:var(--mut);font-size:13.5px}
+p{margin:8px 0}
+.neg{color:var(--red)}.pos{color:var(--grn)}
+.search{position:relative}.search .i{position:absolute;inset-inline-start:13px;top:14px;color:var(--mut);width:20px;height:20px;pointer-events:none}
+.search input{padding-inline-start:42px}
+
+/* ---------- ردیف‌ها ---------- */
+.item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--bd);animation:fade .3s both}
+.item:last-child{border:0;padding-bottom:2px}.item:first-child{padding-top:4px}
+.item .nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;overflow-wrap:anywhere}
+.av{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;font-weight:800;font-size:17px;flex:none;background:var(--pri2);color:var(--pri3)}
+.av.c1{background:var(--blu2);color:var(--blu)}.av.c2{background:var(--vio2);color:var(--vio)}.av.c3{background:var(--amb2);color:var(--amb)}.av.c4{background:var(--grn2);color:var(--grn)}.av.c5{background:var(--red2);color:var(--red)}
+.ic{background:var(--pri2);color:var(--pri3);border:0;border-radius:13px;width:42px;height:42px;display:grid;place-items:center;flex:none;transition:transform .15s,background .15s}
+.ic:active{transform:scale(.88)}
+.ic .i{width:20px;height:20px}
+.ic.dg{background:var(--red2);color:var(--red)}.ic.ok{background:var(--grn2);color:var(--grn)}.ic.am{background:var(--amb2);color:var(--amb)}
+.kv{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--bd)}.kv:last-child{border:0;padding-bottom:0}
+.empty{text-align:center;color:var(--mut);padding:26px 10px 20px}
+.empty .i{width:46px;height:46px;opacity:.45;margin-bottom:6px;stroke-width:1.4}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--pri2);color:var(--pri3)}
+.pill.red{background:var(--red2);color:var(--red)}.pill.grn{background:var(--grn2);color:var(--grn)}.pill.amb{background:var(--amb2);color:var(--amb)}
+.seg{display:flex;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:4px;gap:4px;margin-bottom:14px;box-shadow:var(--sh)}
+.seg button{flex:1;border:0;background:none;border-radius:12px;padding:10px;font-weight:700;color:var(--mut);transition:background .2s,color .2s}
+.seg button.on{background:var(--grad);color:#fff;box-shadow:0 4px 12px rgba(14,138,140,.3)}
+.status{border-radius:16px;padding:14px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.status.s-d{background:var(--red2);color:var(--red)}.status.s-c{background:var(--grn2);color:var(--grn)}.status.s-z{background:var(--grn2);color:var(--grn)}
+
+/* ---------- داشبورد ---------- */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:14px;box-shadow:var(--sh);position:relative;overflow:hidden;animation:rise .45s var(--ease) both}
+.stat::before{content:"";position:absolute;top:0;inset-inline:0;height:4px;background:var(--c,var(--pri))}
+.stat small{color:var(--mut);font-size:13px;display:block}
+.stat b{display:block;font-size:19px;margin:2px 0;color:var(--c,var(--tx));overflow-wrap:anywhere}
+.stat .sub{font-size:12px;color:var(--mut)}
+.bar{height:8px;background:var(--pri2);border-radius:8px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--grad);border-radius:8px;transition:width .8s var(--ease)}
+.ring{--p:0;width:86px;height:86px;border-radius:50%;background:conic-gradient(var(--pri) calc(var(--p)*1%),var(--pri2) 0);display:grid;place-items:center;flex:none}
+.ring span{width:66px;height:66px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:800;font-size:17px}
+.sum{display:flex;align-items:center;gap:16px}
+
+/* ---------- پنجره‌ها ---------- */
+.modal{position:fixed;inset:0;background:rgba(8,20,24,.5);backdrop-filter:blur(3px);display:flex;align-items:flex-end;justify-content:center;z-index:30;animation:fade .2s both}
+.modal .card{width:100%;max-width:520px;margin:0;border-radius:28px 28px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));box-shadow:var(--sh2);max-height:92vh;overflow:auto;animation:sheet .32s var(--ease) both}
+.modal .card::before{content:"";display:block;width:42px;height:5px;border-radius:5px;background:var(--bd);margin:-8px auto 12px}
+@keyframes sheet{from{transform:translateY(60%);opacity:0}to{transform:none;opacity:1}}
+.toast{position:fixed;bottom:calc(26px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#16292e;color:#fff;padding:12px 20px;border-radius:16px;z-index:60;font-size:14.5px;max-width:90%;box-shadow:var(--sh2);animation:pop .3s var(--ease) both}
+@keyframes pop{from{opacity:0;transform:translate(-50%,14px) scale(.96)}to{opacity:1;transform:translate(-50%,0)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* ===== آیکون‌ها ===== */
+const IC={
+  classes:'<path d="M3 10l9-6 9 6-9 6-9-6z"/><path d="M7 12.5V17c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-4.5"/>',
+  students:'<circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M17 14c2.5 0 4.5 1.7 4.5 4.5"/>',
+  pay:'<path d="M3 7.5A2.5 2.5 0 015.5 5H18a2 2 0 012 2v1"/><path d="M3 7.5V17a2 2 0 002 2h14a1.5 1.5 0 001.5-1.5v-8A1.5 1.5 0 0019 8H5.5A2.5 2.5 0 013 7.5z"/><circle cx="16.5" cy="13.5" r="1.2"/>',
+  debt:'<circle cx="12" cy="13" r="7.5"/><path d="M12 9v4.2l2.6 1.6"/><path d="M9.5 3h5"/>',
+  dash:'<path d="M5 20v-8M12 20V5M19 20v-5"/>',
+  backup:'<path d="M12 4v10m0 0l-4-4m4 4l4-4"/><path d="M5 16v2a2 2 0 002 2h10a2 2 0 002-2v-2"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/>',
+  trash:'<path d="M5 7h14M10 7V4.5h4V7M7 7l.8 12h8.4L17 7"/>',
+  bell:'<path d="M6 16v-5a6 6 0 0112 0v5l1.5 2h-15L6 16z"/><path d="M10 20.5a2 2 0 004 0"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 010 12h-3"/>',
+  chev:'<path d="M9 5l7 7-7 7"/>',
+  fee:'<circle cx="12" cy="12" r="8.5"/><path d="M14.8 9.2c-.5-.8-1.5-1.2-2.8-1.2-1.6 0-2.6.7-2.6 1.8 0 2.6 5.4 1.2 5.4 3.8 0 1.2-1.1 2-2.8 2-1.3 0-2.3-.4-2.9-1.2M12 6.5V8m0 8v1.5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  cal:'<rect x="4" y="5.5" width="16" height="14" rx="3"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/>',
+  search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/>',
+  warn:'<path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10v4M12 17v.2"/>',
+  up:'<path d="M12 15V5m0 0L8 9m4-4l4 4"/><path d="M5 16v2a2 2 0 002 2h10a2 2 0 002-2v-2"/>',
+  smile:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14c1 1.4 2.2 2 3.5 2s2.5-.6 3.5-2M9 9.5v.4M15 9.5v.4"/>'
+};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[n]||''}</svg>`;
+
+/* ===== اعداد فارسی ===== */
+const FD='۰۱۲۳۴۵۶۷۸۹';
+const fa=s=>String(s).replace(/\d/g,d=>FD[d]);
+const unfa=s=>String(s).replace(/[۰-۹]/g,d=>FD.indexOf(d)).replace(/[٠-٩]/g,d=>d.charCodeAt(0)-1632);
+const num=s=>Number(unfa(s).replace(/[٬,،\s]/g,''))||0;
+const money=n=>fa(String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'٬'));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>unfa(String(s)).replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/‌/g,'').replace(/\s+/g,' ').trim().toLowerCase();
+const collator=new Intl.Collator('fa');
+const MAXAMT=1e11;
+// تبدیل خودکار ارقام و حروف در همه‌ی ورودی‌ها
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(e.isComposing||!(t.tagName==='INPUT'&&['text','search','tel'].includes(t.type)||t.tagName==='TEXTAREA'))return;
+  let n=fa(unfa(t.value)).replace(/ي/g,'ی').replace(/ك/g,'ک');
+  const mny=t.dataset.money!==undefined;
+  if(mny){const dg=unfa(n).replace(/\D/g,'').slice(0,13);n=dg?money(Number(dg)):''}
+  if(n!==t.value){const p=t.selectionStart;t.value=n;try{t.setSelectionRange(mny?n.length:p,mny?n.length:p)}catch(_){}}
+});
+
+/* ===== تاریخ شمسی ===== */
+function g2j(gy,gm,gd){const m=[0,31,59,90,120,151,181,212,243,273,304,334];const y2=gm>2?gy+1:gy;
+  let d=355666+365*gy+Math.floor((y2+3)/4)-Math.floor((y2+99)/100)+Math.floor((y2+399)/400)+gd+m[gm-1];
+  let jy=-1595+33*Math.floor(d/12053);d%=12053;jy+=4*Math.floor(d/1461);d%=1461;
+  if(d>365){jy+=Math.floor((d-1)/365);d=(d-1)%365}
+  const jm=d<186?1+Math.floor(d/31):7+Math.floor((d-186)/30);
+  const jd=1+(d<186?d%31:(d-186)%30);return[jy,jm,jd]}
+function j2g(jy,jm,jd){jy+=1595;
+  let d=-355668+365*jy+Math.floor(jy/33)*8+Math.floor((jy%33+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186);
+  let gy=400*Math.floor(d/146097);d%=146097;
+  if(d>36524){gy+=100*Math.floor(--d/36524);d%=36524;if(d>=365)d++}
+  gy+=4*Math.floor(d/1461);d%=1461;
+  if(d>365){gy+=Math.floor((d-1)/365);d=(d-1)%365}
+  let gd=d+1;const s=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];
+  let gm=0;for(gm=0;gm<13&&gd>s[gm];gm++)gd-=s[gm];return[gy,gm,gd]}
+const MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const WEEK=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+const pad=n=>String(n).padStart(2,'0');
+const dim=(y,m)=>m<=6?31:m<=11?30:(g2j(...j2g(y,12,30))[1]===12?30:29);
+// تاریخ به‌صورت رشته‌ی لاتین «1405/08/13» ذخیره می‌شود و با fa() نمایش داده می‌شود
+function today(){const n=new Date();const[a,b,c]=g2j(n.getFullYear(),n.getMonth()+1,n.getDate());return`${a}/${pad(b)}/${pad(c)}`}
+function todayLong(){const n=new Date(),[a,b,c]=g2j(n.getFullYear(),n.getMonth()+1,n.getDate());return fa(`${WEEK[n.getDay()]} ${c} ${MONTHS[b-1]} ${a}`)}
+function fmtDate(s){if(!s)return'';const[a,b,c]=s.split('/').map(Number);return fa(`${c} ${MONTHS[b-1]||''} ${a}`)}
+function daysSince(s){const[a,b,c]=s.split('/').map(Number),g=j2g(a,b,c);return Math.max(0,Math.floor((Date.now()-new Date(g[0],g[1]-1,g[2]))/864e5))}
+function pickDate(init,cb){
+  const[y0,m0,d0]=(init||today()).split('/').map(Number);
+  const w=document.createElement('div');w.className='modal';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');
+  const yrs=[];for(let y=y0-8;y<=y0+8;y++)yrs.push(y);
+  w.innerHTML=`<div class="card"><b class="ttl">${ic('cal')}انتخاب تاریخ</b>
+  <label>سال</label><select id="dy">${yrs.map(y=>`<option value="${y}"${y==y0?' selected':''}>${fa(y)}</option>`).join('')}</select>
+  <label>ماه</label><select id="dm">${MONTHS.map((n,i)=>`<option value="${i+1}"${i+1==m0?' selected':''}>${n}</option>`).join('')}</select>
+  <label>روز</label><select id="dd"></select>
+  <div class="row"><button class="btn gr" id="dt">امروز</button><button class="btn" id="ok">تأیید</button><button class="btn gr" id="no">انصراف</button></div></div>`;
+  document.body.appendChild(w);linkLabels(w);
+  const $=i=>w.querySelector('#'+i);
+  const fill=sel=>{const n=dim(+$('dy').value,+$('dm').value);sel=Math.min(Math.max(1,+sel||1),n);
+    $('dd').innerHTML=Array.from({length:n},(_,i)=>`<option value="${i+1}"${i+1==sel?' selected':''}>${fa(i+1)}</option>`).join('')};
+  fill(d0);$('dy').onchange=$('dm').onchange=()=>fill($('dd').value);
+  $('dt').onclick=()=>{const[a,b,c]=today().split('/').map(Number);$('dy').value=a;$('dm').value=b;fill(c)};
+  $('ok').onclick=()=>{cb(`${$('dy').value}/${pad($('dm').value)}/${pad($('dd').value)}`);w.remove()};
+  $('no').onclick=()=>w.remove();w.onclick=e=>{if(e.target===w)w.remove()};
+}
+
+/* ===== ذخیره‌سازی (localStorage) ===== */
+const KEY='cm_db_v1',LB='cm_last_backup',PREV='cm_db_prev',BAD='cm_db_corrupt';
+let loadWarn='';
+// پاک‌سازی و اعتبارسنجی داده (برای بارگذاری، بازیابی پشتیبان و بازگردانی)
+// lenient=true: بخش‌های ناقص (مثلاً فایل نسخه‌های قدیمی) خالی در نظر گرفته می‌شوند
+function cleanDB(x,lenient){
+  if(!x||typeof x!=='object'||Array.isArray(x))throw'ساختار فایل معتبر نیست';
+  const A=k=>{if(Array.isArray(x[k]))return x[k];if(k==='classes'||k==='students'||lenient===true||x[k]==null)return[];throw`بخش «${k}» معتبر نیست`};
+  if(!Array.isArray(x.classes)||!Array.isArray(x.students))throw'فایل شامل کلاس‌ها و دانش‌آموزان نیست';
+  const S=v=>String(v??'').slice(0,300),N=v=>Number.isFinite(+v)?Math.max(0,Math.min(MAXAMT,Math.round(+v))):0;
+  let drop=0;const ok=(a,f)=>{const seen=new Set();return A(a).filter(o=>{const g=o&&typeof o==='object'&&typeof o.id==='string'&&o.id&&!seen.has(o.id)&&f(o);if(g)seen.add(o.id);else drop++;return g})};
+  const classes=ok('classes',c=>S(c.name).trim()).map(c=>({id:c.id,name:S(c.name).trim(),fee:N(c.fee)}));
+  const cid=new Set(classes.map(c=>c.id));
+  const students=ok('students',s=>S(s.name).trim()&&cid.has(s.classId)).map(s=>({id:s.id,name:S(s.name).trim(),classId:s.classId,fee:s.fee==null?null:N(s.fee),note:S(s.note)}));
+  const sid=new Set(students.map(s=>s.id));
+  const D=v=>{const m=/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/.exec(unfa(String(v??'')).trim());return m&&+m[2]>=1&&+m[2]<=12&&+m[3]>=1&&+m[3]<=31?`${m[1]}/${pad(m[2])}/${pad(m[3])}`:today()};
+  const payments=ok('payments',p=>sid.has(p.studentId)&&N(p.amount)>0).map(p=>({id:p.id,studentId:p.studentId,amount:N(p.amount),date:D(p.date),note:S(p.note)}));
+  const reminders=ok('reminders',r=>sid.has(r.studentId)&&S(r.text).trim()).map(r=>({id:r.id,studentId:r.studentId,date:D(r.date),text:S(r.text).trim(),done:!!r.done}));
+  return{d:{v:1,classes,students,payments,reminders},drop};
+}
+const DB={
+  d:{v:1,classes:[],students:[],payments:[],reminders:[]},
+  load(){let raw=null;try{raw=localStorage.getItem(KEY)}catch(_){return}
+    if(!raw)return;
+    try{const c=cleanDB(JSON.parse(raw),true);this.d=c.d;
+      if(c.drop){try{localStorage.setItem(BAD,raw)}catch(_){}loadWarn=`${fa(c.drop)} مورد ناسالم هنگام بارگذاری کنار گذاشته شد (نسخه‌ی اصلی نگه‌داری شد)`}}
+    catch(_){try{localStorage.setItem(BAD,raw)}catch(__){}loadWarn='داده‌ی ذخیره‌شده خراب بود؛ نسخه‌ی اصلی جداگانه نگه‌داری شد. از «پشتیبان» می‌توانید فایل خود را بازیابی کنید'}},
+  save(){try{localStorage.setItem(KEY,JSON.stringify(this.d));return true}
+    catch(_){setTimeout(()=>toast('ذخیره‌سازی ناموفق بود! حافظه پر است؛ همین حالا پشتیبان بگیرید',5000),30);return false}},
+  uid:()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+  add(c,o){o.id=this.uid();this.d[c].push(o);this.save();return o},
+  upd(c,id,p){const o=this.d[c].find(x=>x.id===id);if(o){Object.assign(o,p);this.save()}return o},
+  del(c,id){this.d[c]=this.d[c].filter(x=>x.id!==id);this.save()},
+  // حذف دانش‌آموز همراه واریزی‌ها و یادآورهایش
+  delStudent(id){const d=this.d;d.students=d.students.filter(s=>s.id!==id);d.payments=d.payments.filter(p=>p.studentId!==id);d.reminders=d.reminders.filter(r=>r.studentId!==id);this.save()},
+  // شهریه‌ی کلاس برای همه: شهریه‌ی اختصاصی دانش‌آموزان کلاس لغو می‌شود (fee=null)
+  applyClassFee(id){this.d.students.forEach(s=>{if(s.classId===id)s.fee=null});this.save()},
+  // حذف کلاس: to=شناسه‌ی کلاس مقصد (انتقال دانش‌آموزان) یا null (حذف دانش‌آموزان و سوابقشان)
+  delClass(id,to){const d=this.d;
+    if(to){d.students.forEach(s=>{if(s.classId===id)s.classId=to})}
+    else{const ids=new Set(d.students.filter(s=>s.classId===id).map(s=>s.id));
+      d.students=d.students.filter(s=>!ids.has(s.id));d.payments=d.payments.filter(p=>!ids.has(p.studentId));d.reminders=d.reminders.filter(r=>!ids.has(r.studentId))}
+    d.classes=d.classes.filter(c=>c.id!==id);this.save()}
+};
+/* ساختار: classes{id,name,fee} | students{id,name,classId,fee(null=شهریه‌ی کلاس),note}
+   payments{id,studentId,amount,date,note} | reminders{id,studentId,date,text,done} */
+
+/* ===== ابزارهای رابط ===== */
+function linkLabels(root){root.querySelectorAll('label:not([for])').forEach(l=>{
+  let n=l.nextElementSibling;if(n&&n.classList.contains('inl'))n=n.querySelector('input,select');
+  if(n&&/^(INPUT|SELECT|TEXTAREA)$/.test(n.tagName)&&n.id)l.htmlFor=n.id})}
+function modal(html){const w=document.createElement('div');w.className='modal';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');
+  w.innerHTML=`<div class="card">${html}</div>`;document.body.appendChild(w);linkLabels(w);
+  w.onclick=e=>{if(e.target===w)w.remove()};
+  w.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.target.tagName==='INPUT'&&e.target.type!=='file'){e.preventDefault();const b=w.querySelector('#ok');b&&b.click()}});
+  const f=w.querySelector('input:not([readonly]):not([type=file])');if(f)setTimeout(()=>{try{f.focus({preventScroll:true})}catch(_){}},60);
+  return w}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=document.querySelectorAll('.modal');if(m.length)m[m.length-1].remove()}});
+function confirmBox(msg,okText,cb){const w=modal(`<p style="font-size:16px;line-height:1.9">${msg}</p><div class="row"><button class="btn red" id="ok">${okText}</button><button class="btn gr" id="no">انصراف</button></div>`);
+  w.querySelector('#ok').onclick=()=>{w.remove();cb()};w.querySelector('#no').onclick=()=>w.remove()}
+let toastT;function toast(m,ms){document.querySelectorAll('.toast').forEach(x=>x.remove());const t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.setAttribute('aria-live','polite');t.textContent=m;document.body.appendChild(t);clearTimeout(toastT);toastT=setTimeout(()=>t.remove(),ms||2000)}
+const countIn=id=>DB.d.students.filter(s=>s.classId===id).length;
+// شهریه‌ی مؤثر دانش‌آموز: اختصاصی (اگر null نباشد) وگرنه شهریه‌ی کلاس
+const feeOf=s=>s.fee!=null?s.fee:((DB.d.classes.find(c=>c.id===s.classId)||{}).fee||0);
+const avatar=n=>{const a=Array.from(String(n).trim());let h=0;for(const ch of a)h+=ch.codePointAt(0);return`<span class="av c${h%6}" aria-hidden="true">${esc(a[0]||'؟')}</span>`};
+const empty=(i,t)=>`<div class="empty">${ic(i)}<div>${t}</div></div>`;
+const paidMap=()=>{const m=new Map();DB.d.payments.forEach(p=>m.set(p.studentId,(m.get(p.studentId)||0)+p.amount));return m};
+// مانده: مثبت = بدهکار، منفی = طلبکار
+const balanceOf=(s,pm)=>feeOf(s)-((pm||paidMap()).get(s.id)||0);
+function stateHtml(b){return b>0?`<b class="neg">بدهکار: ${money(b)} تومان</b>`:b<0?`<b class="pos">طلبکار: ${money(-b)} تومان</b>`:'<b class="pos">تسویه</b>'}
+
+/* ===== ناوبری و صفحه‌ی اصلی ===== */
+const MENU=[['classes','classes','کلاس‌ها'],['students','students','دانش‌آموزان'],['pay','pay','واریزی'],['debt','debt','بدهکاران'],['dash','dash','داشبورد'],['backup','backup','پشتیبان']];
+const TITLE=Object.fromEntries(MENU.map(m=>[m[0],m[2]]));
+const PAGES={};
+const app=document.getElementById('app');
+let cur='home';
+function go(p){cur=p;history.pushState({p},'');render()}
+window.onpopstate=e=>{cur=(e.state&&e.state.p)||'home';render()};
+function render(){
+  document.querySelectorAll('.modal').forEach(m=>m.remove());
+  window.scrollTo(0,0);
+  if(cur==='home'){
+    const d=DB.d,pm=paidMap();let debt=0;d.students.forEach(s=>{const b=balanceOf(s,pm);if(b>0)debt+=b});
+    let lb='';try{lb=localStorage.getItem(LB)||''}catch(_){}
+    const has=d.students.length+d.payments.length>0,days=lb?daysSince(lb):0;
+    app.innerHTML=`<div class="hero"><h1>کلاس‌های فوق‌برنامه</h1><div class="today">${ic('cal')}${todayLong()}</div></div>
+    <div class="chips"><div class="chip"><small>دانش‌آموز</small><b>${fa(d.students.length)}</b></div><div class="chip d"><small>جمع بدهی</small><b>${money(debt)} <small style="display:inline">تومان</small></b></div></div>
+    ${has&&(!lb||days>14)?`<button class="banner" id="bnr">${ic('warn')}<span>${lb?fa(days)+' روز از آخرین پشتیبان‌گیری گذشته است':'هنوز از اطلاعات پشتیبان نگرفته‌اید'} — لمس کنید</span></button>`:''}
+    <div class="grid">${MENU.map(m=>`<button class="tile t-${m[0]}" data-p="${m[0]}"><span class="bub">${ic(m[1])}</span>${m[2]}</button>`).join('')}</div>`;
+    app.querySelectorAll('.tile').forEach(b=>b.onclick=()=>go(b.dataset.p));
+    const bn=app.querySelector('#bnr');if(bn)bn.onclick=()=>go('backup');
+    return;
+  }
+  app.innerHTML=`<header><button class="bk" id="bk" aria-label="بازگشت">${ic('chev')}</button><h2>${TITLE[cur]}</h2></header><main id="pg"></main>`;
+  document.getElementById('bk').onclick=()=>history.length>1?history.back():(cur='home',render());
+  const el=document.getElementById('pg');
+  (PAGES[cur]||(e=>e.innerHTML=''))(el);
+  linkLabels(el);
+}
+
+/* ===== صفحه‌ی کلاس‌ها ===== */
+PAGES.classes=el=>{
+  el.innerHTML=`<div class="card"><b class="ttl">${ic('plus')}کلاس جدید</b><label>نام کلاس</label><input id="cn" autocomplete="off" placeholder="مثلاً ریاضی پنجم">
+  <label>شهریه (تومان)</label><input id="cf" inputmode="numeric" data-money placeholder="۰" autocomplete="off">
+  <div class="row"><button class="btn" id="ca">${ic('plus')}افزودن کلاس</button></div></div><div class="card" id="cl"></div>`;
+  const cn=el.querySelector('#cn'),cf=el.querySelector('#cf'),cl=el.querySelector('#cl');
+  const dup=(name,skip)=>DB.d.classes.some(c=>c.id!==skip&&norm(c.name)===norm(name));
+  const list=()=>{const a=DB.d.classes;
+    cl.innerHTML=a.length?a.map(c=>`<div class="item" data-id="${c.id}">${avatar(c.name)}<div class="nm"><b>${esc(c.name)}</b>
+      <span class="muted">${fa(countIn(c.id))} دانش‌آموز · ${c.fee?money(c.fee)+' تومان':'بدون شهریه'}</span></div>
+      <button class="ic am" data-a="f" aria-label="اعمال شهریه برای همه">${ic('fee')}</button><button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`).join('')
+      :empty('classes','هنوز کلاسی ثبت نشده است.<br>از کارت بالا اولین کلاس را بسازید.')};
+  const add=()=>{const name=cn.value.trim().replace(/\s+/g,' '),fee=num(cf.value);
+    if(!name){toast('نام کلاس را بنویسید');cn.focus();return}
+    if(dup(name)){toast('کلاسی با این نام وجود دارد');return}
+    if(fee>MAXAMT){toast('شهریه بیش از حد مجاز است');return}
+    DB.add('classes',{name,fee});cn.value=cf.value='';cn.focus();list();toast('کلاس ثبت شد')};
+  el.querySelector('#ca').onclick=add;
+  [cn,cf].forEach(i=>i.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();add()}});
+  cl.onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
+    const c=DB.d.classes.find(x=>x.id===b.closest('.item').dataset.id);if(!c)return;
+    ({e:editClass,d:delClass,f:applyFee})[b.dataset.a](c,list)};
+  list();
+};
+function editClass(c,done){
+  const w=modal(`<b class="ttl">${ic('edit')}ویرایش کلاس</b><label>نام کلاس</label><input id="en" value="${esc(c.name)}" autocomplete="off">
+  <label>شهریه (تومان)</label><input id="ef" inputmode="numeric" data-money value="${c.fee?money(c.fee):''}">
+  <p class="muted">شهریه‌ی دانش‌آموزانی که شهریه‌ی اختصاصی ندارند هم تغییر می‌کند.</p>
+  <div class="row"><button class="btn" id="ok">ذخیره</button><button class="btn gr" id="no">انصراف</button></div>`);
+  w.querySelector('#no').onclick=()=>w.remove();
+  w.querySelector('#ok').onclick=()=>{const name=w.querySelector('#en').value.trim().replace(/\s+/g,' '),fee=num(w.querySelector('#ef').value);
+    if(!name){toast('نام کلاس را بنویسید');return}
+    if(DB.d.classes.some(x=>x.id!==c.id&&norm(x.name)===norm(name))){toast('کلاسی با این نام وجود دارد');return}
+    if(fee>MAXAMT){toast('شهریه بیش از حد مجاز است');return}
+    DB.upd('classes',c.id,{name,fee});w.remove();done();toast('ذخیره شد')};
+}
+function applyFee(c,done){
+  const st=DB.d.students.filter(s=>s.classId===c.id),ind=st.filter(s=>s.fee!=null).length;
+  if(!st.length){toast('این کلاس دانش‌آموزی ندارد');return}
+  confirmBox(`شهریه‌ی «${esc(c.name)}» (${c.fee?money(c.fee)+' تومان':'بدون شهریه'}) برای ${fa(st.length)} دانش‌آموز اعمال شود؟`+(ind?` شهریه‌ی اختصاصی ${fa(ind)} نفر لغو می‌شود.`:''),'اعمال شود',()=>{DB.applyClassFee(c.id);done();toast('شهریه اعمال شد')});
+}
+function delClass(c,done){
+  const n=countIn(c.id),others=DB.d.classes.filter(x=>x.id!==c.id);
+  let h=`<b class="ttl neg">${ic('trash')}حذف کلاس «${esc(c.name)}»</b>`;
+  if(n){h+=`<p>${fa(n)} دانش‌آموز در این کلاس است. تکلیف آن‌ها چه شود؟</p><select id="dm" aria-label="تکلیف دانش‌آموزان">`
+    +others.map(o=>`<option value="${o.id}">انتقال به «${esc(o.name)}»</option>`).join('')
+    +`<option value="">حذف دانش‌آموزان همراه واریزی‌ها و یادآورهایشان</option></select>`
+    +(others.length?`<p class="muted">در صورت انتقال، شهریه‌ی دانش‌آموزانِ بدون شهریه‌ی اختصاصی طبق کلاس جدید می‌شود.</p>`:'')}
+  else h+='<p>این کلاس حذف شود؟</p>';
+  const w=modal(h+`<div class="row"><button class="btn red" id="ok">حذف کلاس</button><button class="btn gr" id="no">انصراف</button></div>`);
+  w.querySelector('#no').onclick=()=>w.remove();
+  w.querySelector('#ok').onclick=()=>{const to=n?w.querySelector('#dm').value||null:null;
+    if(n&&!to){w.remove();confirmBox(`مطمئنید؟ ${fa(n)} دانش‌آموز با همه‌ی سوابق مالی‌شان برای همیشه حذف می‌شوند.`,'بله، حذف شود',()=>{DB.delClass(c.id,null);done();toast('کلاس حذف شد')})}
+    else{DB.delClass(c.id,to);w.remove();done();toast('کلاس حذف شد')}};
+}
+
+/* ===== صفحه‌ی دانش‌آموزان ===== */
+let selClass=null;
+PAGES.students=el=>{
+  const cls=DB.d.classes;
+  if(!cls.length){el.innerHTML=`<div class="card">${empty('classes','هنوز کلاسی ثبت نشده است.<br>ابتدا یک کلاس بسازید.')}<button class="btn block" id="gc">رفتن به کلاس‌ها</button></div>`;
+    el.querySelector('#gc').onclick=()=>go('classes');return}
+  if(selClass!=='all'&&!cls.some(c=>c.id===selClass))selClass=cls[0].id;
+  el.innerHTML=`<div class="card"><label>کلاس</label><select id="sc">${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}<option value="all">همه‌ی کلاس‌ها</option></select>
+  <label>نام دانش‌آموز (با Enter ثبت می‌شود)</label><div class="inl"><input id="sn" enterkeyhint="done" autocomplete="off" placeholder="نام و نام خانوادگی"><button class="btn" id="sa" aria-label="ثبت">${ic('plus')}ثبت</button></div></div>
+  <div class="card"><div class="search">${ic('search')}<input id="sq" type="search" placeholder="جستجو در لیست…" autocomplete="off" aria-label="جستجو"></div><div class="muted" id="cnt" style="margin:10px 2px 8px"></div><div id="sl"></div></div>`;
+  const $=i=>el.querySelector('#'+i),sc=$('sc'),sn=$('sn'),sq=$('sq'),sl=$('sl');
+  sc.value=selClass;
+  const list=()=>{const nq=norm(sq.value),cn=Object.fromEntries(DB.d.classes.map(c=>[c.id,c.name]));
+    const a=DB.d.students.filter(s=>(selClass==='all'||s.classId===selClass)&&(!nq||norm(s.name).includes(nq))).sort((x,y)=>collator.compare(x.name,y.name));
+    $('cnt').textContent=fa(a.length)+' دانش‌آموز';
+    sl.innerHTML=a.map(s=>`<div class="item" data-id="${s.id}">${avatar(s.name)}<div class="nm"><b>${esc(s.name)}</b>
+      <span class="muted">${[selClass==='all'?esc(cn[s.classId]||''):'',money(feeOf(s))+' تومان'+(s.fee!=null?' (اختصاصی)':''),s.note?esc(s.note):''].filter(Boolean).join(' · ')}</span></div>
+      <button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`).join('')||empty('students','موردی یافت نشد.')};
+  const add=()=>{const name=sn.value.trim().replace(/\s+/g,' ');
+    if(selClass==='all'){toast('برای ثبت، یک کلاس مشخص انتخاب کنید');return}
+    if(!name){sn.focus();return}
+    DB.add('students',{name,classId:selClass,fee:null,note:''});
+    sn.value='';sn.focus();list();toast('«'+name+'» ثبت شد')};
+  sn.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();add()}};
+  $('sa').onmousedown=e=>e.preventDefault();$('sa').onclick=add;
+  sc.onchange=()=>{selClass=sc.value;list()};
+  sq.oninput=list;
+  sl.onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
+    const s=DB.d.students.find(x=>x.id===b.closest('.item').dataset.id);if(!s)return;
+    b.dataset.a==='e'?editStudent(s,list):delStudent(s,list)};
+  list();
+};
+function editStudent(s,done){
+  const w=modal(`<b class="ttl">${ic('edit')}ویرایش دانش‌آموز</b><label>نام</label><input id="en" value="${esc(s.name)}" autocomplete="off">
+  <label>کلاس (برای جابه‌جایی تغییر دهید)</label><select id="ec">${DB.d.classes.map(c=>`<option value="${c.id}"${c.id===s.classId?' selected':''}>${esc(c.name)}</option>`).join('')}</select>
+  <label>شهریه‌ی اختصاصی (تومان) — خالی = شهریه‌ی کلاس</label><input id="ef" inputmode="numeric" data-money value="${s.fee==null?'':money(s.fee)}" placeholder="شهریه‌ی کلاس">
+  <label>یادداشت</label><input id="eo" value="${esc(s.note)}" autocomplete="off">
+  <div class="row"><button class="btn" id="ok">ذخیره</button><button class="btn gr" id="no">انصراف</button></div>`);
+  w.querySelector('#no').onclick=()=>w.remove();
+  w.querySelector('#ok').onclick=()=>{const name=w.querySelector('#en').value.trim().replace(/\s+/g,' ');
+    if(!name){toast('نام را بنویسید');return}
+    const fv=w.querySelector('#ef').value,has=/\d/.test(unfa(fv)),fee=has?num(fv):null;
+    if(fee!=null&&fee>MAXAMT){toast('شهریه بیش از حد مجاز است');return}
+    DB.upd('students',s.id,{name,fee,classId:w.querySelector('#ec').value,note:w.querySelector('#eo').value.trim()});w.remove();done();toast('ذخیره شد')};
+}
+function delStudent(s,done){
+  const np=DB.d.payments.filter(p=>p.studentId===s.id).length;
+  confirmBox(`«${esc(s.name)}» حذف شود؟`+(np?` ${fa(np)} واریزی او هم حذف می‌شود.`:''),'حذف',()=>{DB.delStudent(s.id);done();toast('حذف شد')});
+}
+
+/* ===== واریزی‌ها ===== */
+let payClass=null,payStu=null;
+PAGES.pay=el=>{
+  const cls=DB.d.classes;
+  if(!cls.length||!DB.d.students.length){
+    el.innerHTML=`<div class="card">${empty('pay','ابتدا کلاس و دانش‌آموز ثبت کنید.<br>واریزی برای هر دانش‌آموز ثبت می‌شود.')}<button class="btn block" id="gc">${cls.length?'رفتن به دانش‌آموزان':'رفتن به کلاس‌ها'}</button></div>`;
+    el.querySelector('#gc').onclick=()=>go(cls.length?'students':'classes');return}
+  if(!cls.some(c=>c.id===payClass))payClass=(cls.find(c=>countIn(c.id))||cls[0]).id;
+  el.innerHTML=`<div class="card"><label>کلاس</label><select id="pc">${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>
+  <label>دانش‌آموز</label><select id="ps"></select></div><div id="pb"></div>`;
+  const $=i=>el.querySelector('#'+i),pc=$('pc'),ps=$('ps'),pb=$('pb');
+  pc.value=payClass;
+  const stuList=()=>DB.d.students.filter(s=>s.classId===payClass).sort((x,y)=>collator.compare(x.name,y.name));
+  const fillStu=()=>{const a=stuList();
+    if(!a.some(s=>s.id===payStu))payStu=a.length?a[0].id:null;
+    ps.innerHTML=a.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')||'<option value="">— بدون دانش‌آموز —</option>';
+    if(payStu)ps.value=payStu};
+  let date=today();
+  const stu=()=>DB.d.students.find(s=>s.id===payStu);
+  const refresh=()=>{const s=stu();if(!s)return;
+    const list=DB.d.payments.filter(p=>p.studentId===s.id).reverse().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0);
+    const paid=list.reduce((t,p)=>t+p.amount,0),bal=feeOf(s)-paid;
+    $('sm').innerHTML=`<div class="sum" style="margin-bottom:6px">${avatar(s.name)}<b style="font-size:17px">${esc(s.name)}</b></div>
+      <div class="kv"><span>شهریه${s.fee!=null?' (اختصاصی)':''}</span><b>${money(feeOf(s))} تومان</b></div>
+      <div class="kv"><span>جمع واریزی‌ها</span><b>${money(paid)} تومان</b></div>
+      <div class="status ${bal>0?'s-d':bal<0?'s-c':'s-z'}"><span>وضعیت</span>${stateHtml(bal)}</div>`;
+    $('pl').innerHTML=list.length?list.map(p=>`<div class="item" data-id="${p.id}"><span class="av c4" aria-hidden="true">${ic('pay')}</span><div class="nm"><b>${money(p.amount)} تومان</b>
+      <span class="muted">${fmtDate(p.date)}${p.note?' · '+esc(p.note):''}</span></div>
+      <button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`).join(''):empty('pay','هنوز واریزی ثبت نشده است.');
+    $('debtbtn').style.display=bal>0?'':'none';$('debtbtn').dataset.v=bal};
+  const body=()=>{const s=stu();
+    if(!s){pb.innerHTML=`<div class="card">${empty('students','این کلاس دانش‌آموزی ندارد.')}</div>`;return}
+    pb.innerHTML=`<div class="card" id="sm"></div>
+    <div class="card"><b class="ttl">${ic('plus')}ثبت واریزی</b><label>مبلغ (تومان)</label><input id="pa" inputmode="numeric" data-money placeholder="۰" autocomplete="off" enterkeyhint="done">
+    <button class="btn gr block" id="debtbtn" style="margin-top:10px">پر کردن با مبلغ بدهی</button>
+    <label>تاریخ</label><input id="pd" readonly value="${fmtDate(date)}">
+    <label>یادداشت (اختیاری)</label><input id="pn" autocomplete="off">
+    <div class="row"><button class="btn" id="pk">${ic('check')}ثبت واریزی</button></div></div>
+    <div class="card"><b class="ttl">${ic('cal')}سابقه‌ی واریزی‌ها</b><div id="pl"></div></div>`;
+    linkLabels(pb);
+    const pa=$('pa'),pn=$('pn');
+    $('pd').onclick=()=>pickDate(date,v=>{date=v;$('pd').value=fmtDate(v)});
+    $('debtbtn').onclick=e=>{pa.value=money(+e.currentTarget.dataset.v);pa.focus()};
+    const add=()=>{const amt=num(pa.value);
+      if(amt<=0){toast('مبلغ را وارد کنید');pa.focus();return}
+      if(amt>MAXAMT){toast('مبلغ بیش از حد مجاز است');return}
+      DB.add('payments',{studentId:payStu,amount:amt,date,note:pn.value.trim()});
+      pa.value=pn.value='';pa.focus();refresh();toast('واریزی ثبت شد')};
+    $('pk').onclick=add;
+    [pa,pn].forEach(i=>i.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();add()}});
+    $('pl').onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
+      const p=DB.d.payments.find(x=>x.id===b.closest('.item').dataset.id);if(!p)return;
+      b.dataset.a==='e'?editPayment(p,refresh):confirmBox(`واریزی ${money(p.amount)} تومان (${fmtDate(p.date)}) حذف شود؟`,'حذف',()=>{DB.del('payments',p.id);refresh();toast('حذف شد')})};
+    refresh()};
+  pc.onchange=()=>{payClass=pc.value;payStu=null;fillStu();body()};
+  ps.onchange=()=>{payStu=ps.value;body()};
+  fillStu();body();
+};
+function editPayment(p,done){
+  let date=p.date;
+  const w=modal(`<b class="ttl">${ic('edit')}ویرایش واریزی</b><label>مبلغ (تومان)</label><input id="ea" inputmode="numeric" data-money value="${money(p.amount)}">
+  <label>تاریخ</label><input id="ed" readonly value="${fmtDate(p.date)}">
+  <label>یادداشت</label><input id="eo" value="${esc(p.note)}" autocomplete="off">
+  <div class="row"><button class="btn" id="ok">ذخیره</button><button class="btn gr" id="no">انصراف</button></div>`);
+  const q=i=>w.querySelector('#'+i);
+  q('ed').onclick=()=>pickDate(date,v=>{date=v;q('ed').value=fmtDate(v)});
+  q('no').onclick=()=>w.remove();
+  q('ok').onclick=()=>{const amt=num(q('ea').value);
+    if(amt<=0){toast('مبلغ را وارد کنید');return}
+    if(amt>MAXAMT){toast('مبلغ بیش از حد مجاز است');return}
+    DB.upd('payments',p.id,{amount:amt,date,note:q('eo').value.trim()});w.remove();done();toast('ذخیره شد')};
+}
+
+/* ===== بدهکاران و یادآوری ===== */
+function reminderModal(s,r,done){
+  let date=r?r.date:today();
+  const bal=balanceOf(s);
+  const w=modal(`<b class="ttl">${ic('bell')}${r?'ویرایش':'افزودن'} یادآور — ${esc(s.name)}</b><label>تاریخ یادآوری</label><input id="rd" readonly value="${fmtDate(date)}">
+  <label>متن</label><input id="rt" autocomplete="off" value="${esc(r?r.text:(bal>0?'پیگیری بدهی '+money(bal)+' تومان':''))}">
+  <div class="row"><button class="btn" id="ok">ذخیره</button><button class="btn gr" id="no">انصراف</button></div>`);
+  const q=i=>w.querySelector('#'+i);
+  q('rd').onclick=()=>pickDate(date,v=>{date=v;q('rd').value=fmtDate(v)});
+  q('no').onclick=()=>w.remove();
+  q('ok').onclick=()=>{const text=q('rt').value.trim();
+    if(!text){toast('متن یادآور را بنویسید');return}
+    if(r)DB.upd('reminders',r.id,{date,text});else DB.add('reminders',{studentId:s.id,date,text,done:false});
+    w.remove();done&&done();toast('یادآور ذخیره شد')};
+}
+let debtTab='d',debtClass='all';
+PAGES.debt=el=>{
+  el.innerHTML=`<div class="seg" role="tablist"><button id="td" role="tab">بدهکاران</button><button id="tr" role="tab">یادآورها</button></div><div id="dv"></div>`;
+  const dv=el.querySelector('#dv'),td=el.querySelector('#td'),tr=el.querySelector('#tr');
+  const tabs=()=>{td.className=debtTab==='d'?'on':'';tr.className=debtTab==='r'?'on':'';td.setAttribute('aria-selected',debtTab==='d');tr.setAttribute('aria-selected',debtTab==='r')};
+  td.onclick=()=>{debtTab='d';show()};tr.onclick=()=>{debtTab='r';show()};
+  const show=()=>{tabs();debtTab==='d'?debtors(dv):reminders(dv);linkLabels(dv)};
+  show();
+};
+function debtors(dv){
+  const cls=DB.d.classes;
+  if(debtClass!=='all'&&!cls.some(c=>c.id===debtClass))debtClass='all';
+  dv.innerHTML=`<div class="card"><label>کلاس</label><select id="dc"><option value="all">همه‌ی کلاس‌ها</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>
+  <div class="search" style="margin-top:10px">${ic('search')}<input id="dq" type="search" placeholder="جستجوی نام…" autocomplete="off" aria-label="جستجوی نام"></div>
+  <div class="status s-d" style="font-size:14.5px"><span id="dn"></span><b id="dt"></b></div></div><div class="card" id="dl"></div>`;
+  const $=i=>dv.querySelector('#'+i),dc=$('dc'),dq=$('dq'),dl=$('dl');dc.value=debtClass;
+  const list=()=>{const pm=paidMap(),nq=norm(dq.value),cn=Object.fromEntries(cls.map(c=>[c.id,c.name])),pr=new Map();
+    DB.d.reminders.forEach(r=>{if(!r.done)pr.set(r.studentId,(pr.get(r.studentId)||0)+1)});
+    const rows=DB.d.students.filter(s=>debtClass==='all'||s.classId===debtClass).map(s=>({s,b:balanceOf(s,pm)})).filter(r=>r.b>0)
+      .filter(r=>!nq||norm(r.s.name).includes(nq)).sort((x,y)=>y.b-x.b||collator.compare(x.s.name,y.s.name));
+    $('dn').textContent=fa(rows.length)+' بدهکار';$('dt').textContent='جمع بدهی: '+money(rows.reduce((t,r)=>t+r.b,0))+' تومان';
+    dl.innerHTML=rows.map(({s,b})=>`<div class="item" data-id="${s.id}">${avatar(s.name)}<div class="nm"><b>${esc(s.name)}</b>
+      <span class="muted">${esc(cn[s.classId]||'')} · شهریه ${money(feeOf(s))} · پرداخت ${money(feeOf(s)-b)}${pr.get(s.id)?` · <span class="pill amb">${fa(pr.get(s.id))} یادآور</span>`:''}</span></div>
+      <b class="neg" style="white-space:nowrap">${money(b)}</b>
+      <button class="ic am" data-a="n" aria-label="یادآور">${ic('bell')}</button><button class="ic ok" data-a="p" aria-label="ثبت واریزی">${ic('pay')}</button></div>`).join('')||empty('smile','بدهکاری وجود ندارد 🎉')};
+  dc.onchange=()=>{debtClass=dc.value;list()};dq.oninput=list;
+  dl.onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
+    const s=DB.d.students.find(x=>x.id===b.closest('.item').dataset.id);if(!s)return;
+    if(b.dataset.a==='p'){payClass=s.classId;payStu=s.id;go('pay')}else reminderModal(s,null,list)};
+  list();
+}
+function reminders(dv){
+  dv.innerHTML=`<div class="card" id="rl"></div>`;const rl=dv.querySelector('#rl');
+  const list=()=>{const sm=new Map(DB.d.students.map(s=>[s.id,s])),cn=Object.fromEntries(DB.d.classes.map(c=>[c.id,c.name])),t=today();
+    const all=DB.d.reminders.filter(r=>sm.has(r.studentId));
+    const pend=all.filter(r=>!r.done).sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0),dn=all.filter(r=>r.done).sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0);
+    const it=r=>{const s=sm.get(r.studentId),late=!r.done&&r.date<=t;
+      return`<div class="item" data-id="${r.id}" style="${r.done?'opacity:.55':''}"><span class="av ${late?'c5':'c3'}" aria-hidden="true">${ic('bell')}</span><div class="nm"><b${r.done?' style="text-decoration:line-through"':''}>${esc(r.text)}</b>
+      <span class="muted">${esc(s.name)} · ${esc(cn[s.classId]||'')} · ${late?`<span class="neg">${r.date===t?'امروز':'سررسید گذشته'} (${fmtDate(r.date)})</span>`:fmtDate(r.date)}</span></div>
+      <button class="ic ok" data-a="k" aria-label="${r.done?'بازگردانی':'انجام شد'}">${ic(r.done?'undo':'check')}</button><button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`};
+    rl.innerHTML=(pend.length?pend.map(it).join(''):empty('bell','یادآور فعالی ندارید.<br>از تب بدهکاران با زنگ اضافه کنید.'))
+      +(dn.length?`<div class="muted" style="margin:14px 2px 4px">انجام‌شده (${fa(dn.length)})</div>`+dn.map(it).join(''):'')};
+  rl.onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
+    const r=DB.d.reminders.find(x=>x.id===b.closest('.item').dataset.id);if(!r)return;
+    if(b.dataset.a==='k'){DB.upd('reminders',r.id,{done:!r.done});list()}
+    else if(b.dataset.a==='e')reminderModal(DB.d.students.find(s=>s.id===r.studentId),r,list);
+    else confirmBox('این یادآور حذف شود؟','حذف',()=>{DB.del('reminders',r.id);list();toast('حذف شد')})};
+  list();
+}
+
+/* ===== داشبورد وضعیت مالی ===== */
+PAGES.dash=el=>{
+  const d=DB.d,pm=paidMap(),t=today(),mp=t.slice(0,7),ids=new Set(d.students.map(s=>s.id));
+  let fee=0,rec=0,debt=0,cred=0,nd=0,nc=0;
+  const cs=new Map(d.classes.map(c=>[c.id,{c,n:0,fee:0,paid:0,debt:0}]));
+  d.students.forEach(s=>{const f=feeOf(s),p=pm.get(s.id)||0,b=f-p;fee+=f;rec+=p;
+    if(b>0){debt+=b;nd++}else if(b<0){cred-=b;nc++}
+    const r=cs.get(s.classId);if(r){r.n++;r.fee+=f;r.paid+=p;if(b>0)r.debt+=b}});
+  const mon=d.payments.filter(p=>ids.has(p.studentId)&&String(p.date).slice(0,7)===mp).reduce((a,p)=>a+p.amount,0);
+  const rp=d.reminders.filter(r=>!r.done&&ids.has(r.studentId)),late=rp.filter(r=>r.date<=t).length;
+  const sm=new Map(d.students.map(s=>[s.id,s]));
+  const recent=d.payments.filter(p=>ids.has(p.studentId)).sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0).slice(0,5);
+  const pct=(a,b)=>b>0?Math.min(100,Math.round(a/b*100)):0;
+  const box=(l,v,c,sub,i)=>`<div class="stat" style="--c:${c};animation-delay:${i*.05}s"><small>${l}</small><b>${money(v)}</b><span class="sub">${sub}</span></div>`;
+  el.innerHTML=`<div class="card"><div class="sum"><div class="ring" style="--p:${pct(rec,fee)}"><span>${fa(pct(rec,fee))}٪</span></div>
+      <div style="flex:1"><b>درصد وصول شهریه</b><div class="muted">${money(rec)} از ${money(fee)} تومان</div><div class="bar"><i style="width:${pct(rec,fee)}%"></i></div></div></div></div>
+  <div class="stats">
+    ${box('شهریه‌ی کل',fee,'var(--blu)','تومان',0)}${box('دریافتی',rec,'var(--grn)','تومان · '+fa(pct(rec,fee))+'٪ از کل',1)}
+    ${box('بدهی',debt,'var(--red)',fa(nd)+' بدهکار',2)}${box('طلبکار (اضافه‌پرداخت)',cred,'var(--vio)',fa(nc)+' نفر',3)}</div>
+  <div class="card"><div class="kv"><span>دریافتی این ماه (${MONTHS[+mp.slice(5)-1]})</span><b class="pos">${money(mon)}</b></div>
+  <div class="kv"><span>تعداد کلاس / دانش‌آموز</span><b>${fa(d.classes.length)} / ${fa(d.students.length)}</b></div>
+  <div class="kv"><span>یادآورهای فعال</span><b>${fa(rp.length)}${late?` <span class="pill red">${fa(late)} سررسید</span>`:''}</b></div></div>
+  <div class="card"><b class="ttl">${ic('classes')}وضعیت کلاس‌ها</b><div id="dcl"></div></div>
+  <div class="card"><b class="ttl">${ic('pay')}آخرین واریزی‌ها</b>${recent.map(p=>{const s=sm.get(p.studentId);return`<div class="kv"><span>${esc(s.name)} <span class="muted">· ${fmtDate(p.date)}</span></span><b class="pos">${money(p.amount)}</b></div>`}).join('')||empty('pay','واریزی ثبت نشده است.')}</div>`;
+  const dcl=el.querySelector('#dcl');
+  dcl.innerHTML=[...cs.values()].sort((a,b)=>b.debt-a.debt||collator.compare(a.c.name,b.c.name)).map(r=>{const p=pct(r.paid,r.fee);
+    return`<div class="item" data-id="${r.c.id}" style="cursor:pointer">${avatar(r.c.name)}<div class="nm"><b>${esc(r.c.name)}</b>
+    <span class="muted">${fa(r.n)} نفر · دریافتی ${money(r.paid)} از ${money(r.fee)}</span>
+    <div class="bar"><i style="width:${p}%"></i></div></div>
+    ${r.debt?`<span class="pill red" style="white-space:nowrap">${money(r.debt)}</span>`:`<span class="pill grn">${ic('check')}</span>`}</div>`}).join('')||empty('classes','کلاسی ثبت نشده است.');
+  dcl.onclick=e=>{const it=e.target.closest('.item');if(it){debtTab='d';debtClass=it.dataset.id;go('debt')}};
+};
+
+/* ===== پشتیبان‌گیری و PWA ===== */
+PAGES.backup=el=>{
+  const info=()=>{const d=DB.d;let kb=0;try{kb=Math.round((localStorage.getItem(KEY)||'').length/1024)}catch(_){}
+    let lb='';try{lb=localStorage.getItem(LB)||''}catch(_){}
+    return`<div class="kv"><span>کلاس / دانش‌آموز</span><b>${fa(d.classes.length)} / ${fa(d.students.length)}</b></div>
+    <div class="kv"><span>واریزی / یادآور</span><b>${fa(d.payments.length)} / ${fa(d.reminders.length)}</b></div>
+    <div class="kv"><span>حجم داده</span><b>${fa(kb)} کیلوبایت</b></div>
+    <div class="kv"><span>آخرین پشتیبان</span><b${lb?'':' class="neg"'}>${lb?fmtDate(lb):'هرگز'}</b></div>`};
+  el.innerHTML=`<div class="card"><b class="ttl">${ic('dash')}وضعیت داده‌ها</b><div id="bi"></div></div>
+  <div class="card"><b class="ttl">${ic('backup')}گرفتن پشتیبان</b><p class="muted">داده‌ها فقط روی همین گوشی ذخیره می‌شوند؛ فایل پشتیبان را جای امنی نگه دارید (مثلاً ارسال برای خودتان).</p>
+  <div class="row"><button class="btn" id="ex">${ic('backup')}دانلود فایل پشتیبان</button></div></div>
+  <div class="card"><b class="ttl">${ic('up')}بازیابی از پشتیبان</b><p class="muted">داده‌های فعلی با محتوای فایل جایگزین می‌شود (نسخه‌ی قبلی یک‌بار نگه‌داری می‌شود).</p>
+  <input type="file" id="fi" accept=".json,application/json" aria-label="فایل پشتیبان"><div class="row"><button class="btn gr" id="un">${ic('undo')}بازگشت به نسخه‌ی پیش از بازیابی</button></div></div>`;
+  const bi=el.querySelector('#bi');bi.innerHTML=info();
+  el.querySelector('#ex').onclick=()=>{
+    const b=new Blob([JSON.stringify(DB.d)],{type:'application/json'}),a=document.createElement('a');
+    a.href=URL.createObjectURL(b);a.download=`cm-backup-${today().replace(/\//g,'-')}.json`;document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href),4000);try{localStorage.setItem(LB,today())}catch(_){}bi.innerHTML=info();toast('فایل پشتیبان ساخته شد')};
+  el.querySelector('#fi').onchange=e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+    if(f.size>20e6){toast('فایل بیش از حد بزرگ است');return}
+    const r=new FileReader();r.onerror=()=>toast('خواندن فایل ناموفق بود');
+    r.onload=()=>{let c;try{c=cleanDB(JSON.parse(r.result))}catch(err){toast(typeof err==='string'?err:'فایل پشتیبان معتبر نیست');return}
+      const n=c.d;confirmBox(`بازیابی شامل ${fa(n.classes.length)} کلاس، ${fa(n.students.length)} دانش‌آموز، ${fa(n.payments.length)} واریزی و ${fa(n.reminders.length)} یادآور است.${c.drop?` (${fa(c.drop)} مورد نامعتبر نادیده گرفته شد)`:''} داده‌های فعلی جایگزین شود؟`,'جایگزین کن',()=>{
+        try{localStorage.setItem(PREV,JSON.stringify(DB.d))}catch(_){}
+        DB.d=n;DB.save();bi.innerHTML=info();toast('بازیابی انجام شد')})};
+    r.readAsText(f)};
+  el.querySelector('#un').onclick=()=>{let p;try{p=JSON.parse(localStorage.getItem(PREV))}catch(_){}
+    if(!p){toast('نسخه‌ی قبلی وجود ندارد');return}
+    confirmBox('داده‌ها به نسخه‌ی پیش از آخرین بازیابی برگردد؟','بازگردان',()=>{try{DB.d=cleanDB(p,true).d;DB.save();localStorage.removeItem(PREV);bi.innerHTML=info();toast('بازگردانی شد')}catch(_){toast('بازگردانی ناموفق بود')}})};
+};
+// PWA: مانیفست درون‌فایلی (با «افزودن به صفحه‌ی اصلی» مثل اپ باز می‌شود)
+(()=>{const ic2="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0e8a8c"/><stop offset="1" stop-color="#1fb5a1"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#g)"/><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 42l32-19 32 19-32 19z"/><path d="M31 52v17c0 4 8 9 19 9s19-5 19-9V52"/></g></svg>');
+  const m={name:'کلاس‌های فوق‌برنامه',short_name:'کلاس‌ها',lang:'fa',dir:'rtl',display:'standalone',background_color:'#f2f6f7',theme_color:'#0e8a8c',icons:[{src:ic2,sizes:'any',type:'image/svg+xml'}]};
+  const add=(n,a)=>{const e=document.createElement(n);Object.assign(e,a);document.head.appendChild(e)};
+  try{add('link',{rel:'manifest',href:URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}))})}catch(_){}
+  add('link',{rel:'icon',href:ic2});add('meta',{name:'theme-color',content:'#0e8a8c'});add('meta',{name:'apple-mobile-web-app-capable',content:'yes'});add('meta',{name:'mobile-web-app-capable',content:'yes'});
+})();
+
+DB.load();
+history.replaceState({p:'home'},'');
+render();
+if(loadWarn)toast(loadWarn,6000);
+</script>
+</body>
+</html>
