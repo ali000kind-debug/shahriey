@@ -4,10 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>کلاس‌های فوق‌برنامه</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#0e8a8c">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="کلاس‌ها">
+<title>کلاس‌های فوق‌برنامه</title>
 <style>
 :root{
   --bg:#f2f6f7;--card:#fff;--card2:#f7fafa;--tx:#14262b;--mut:#5a6d73;--bd:#e2eaec;
@@ -114,6 +118,49 @@ p{margin:8px 0}
 .status{border-radius:16px;padding:14px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;font-weight:700}
 .status.s-d{background:var(--red2);color:var(--red)}.status.s-c{background:var(--grn2);color:var(--grn)}.status.s-z{background:var(--grn2);color:var(--grn)}
 
+/* ---------- حضور و غیاب ---------- */
+.t-att .bub{background:var(--grn2);color:var(--grn)}
+.tile:nth-child(7){animation-delay:.26s}
+.mk{display:flex;gap:6px;flex:none}
+.mk button{border:1.5px solid var(--bd);background:var(--card2);border-radius:12px;padding:6px 12px;font-weight:700;min-height:42px;color:var(--mut);font-size:14px;transition:background .15s,color .15s,border-color .15s}
+.mk button.p.on{background:var(--grn2);color:var(--grn);border-color:var(--grn)}
+.mk button.a.on{background:var(--red2);color:var(--red);border-color:var(--red)}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.item.cur{background:var(--pri2);margin-inline:-8px;padding-inline:8px;border-radius:14px}
+
+/* ---------- کادر وضعیت شهریه، شماره ردیف، انتخاب گروهی ---------- */
+.item.fs,.item.fs:first-child,.item.fs:last-child{border:1.5px solid var(--fc);border-radius:16px;padding:9px 11px;margin-bottom:8px;background:color-mix(in srgb,var(--fc) 6%,var(--card))}
+.item.fs:last-child{margin-bottom:0}
+.fs-g{--fc:var(--grn)}.fs-y{--fc:var(--amb)}.fs-r{--fc:var(--red)}
+.rn{width:24px;text-align:center;color:var(--mut);font-weight:700;font-size:13px;flex:none}
+.legend{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 10px}
+input.ck{width:24px;height:24px;min-height:0;padding:0;accent-color:var(--pri);flex:none}
+input.amt{width:112px;flex:none;min-height:44px;padding:8px 10px;text-align:center}
+.row.wrap{flex-wrap:wrap}.row.wrap>*{flex:1 1 30%;min-width:0;padding-inline:8px}
+
+/* ---------- انیمیشن جابه‌جایی صفحه‌ها ---------- */
+@keyframes inF{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+@keyframes inB{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes outF{to{opacity:0;transform:translateX(36px)}}
+@keyframes outB{to{opacity:0;transform:translateX(-36px)}}
+#app.f>main,#app.f>.hero,#app.f>.chips,#app.f>.banner,#app.f>.grid{animation:inF .34s var(--ease) both}
+#app.b>main,#app.b>.hero,#app.b>.chips,#app.b>.banner,#app.b>.grid{animation:inB .34s var(--ease) both}
+#app.f>header,#app.b>header{animation:fade .3s both}
+#app.out-f>*{animation:outF .15s ease-in both}
+#app.out-b>*{animation:outB .15s ease-in both}
+
+/* ---------- قفل برنامه ---------- */
+.lock{position:fixed;inset:0;z-index:55;background:var(--grad);display:grid;place-items:center;padding:24px;animation:fade .25s both}
+.lk{width:100%;max-width:340px;background:var(--card);border-radius:28px;padding:26px 20px 22px;text-align:center;box-shadow:var(--sh2);animation:rise .45s var(--ease) both}
+.lk h1{font-size:19px;margin:12px 0 2px;font-weight:800}
+.lk p{margin:0 0 14px;color:var(--mut);font-size:14px}
+.lkb{width:64px;height:64px;border-radius:22px;background:var(--pri2);color:var(--pri);display:inline-grid;place-items:center}
+.lkb .i{width:32px;height:32px}
+.lk input{text-align:center;letter-spacing:2px}
+.lkm{min-height:26px;color:var(--red);font-size:13.5px;margin:8px 0 6px;font-weight:600}
+.lk.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-9px)}40%,80%{transform:translateX(9px)}}
+
 /* ---------- داشبورد ---------- */
 .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .stat{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:14px;box-shadow:var(--sh);position:relative;overflow:hidden;animation:rise .45s var(--ease) both}
@@ -160,6 +207,8 @@ const IC={
   search:'<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/>',
   warn:'<path d="M12 4l9 15.5H3L12 4z"/><path d="M12 10v4M12 17v.2"/>',
   up:'<path d="M12 15V5m0 0L8 9m4-4l4 4"/><path d="M5 16v2a2 2 0 002 2h10a2 2 0 002-2v-2"/>',
+  att:'<rect x="5" y="4.5" width="14" height="16" rx="3"/><path d="M9 4.5V4a1 1 0 011-1h4a1 1 0 011 1v.5"/><path d="M9 13l2.2 2.2L15.5 11"/>',
+  lock:'<rect x="5" y="10.5" width="14" height="9.5" rx="3"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/><circle cx="12" cy="15.2" r="1"/>',
   smile:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 14c1 1.4 2.2 2 3.5 2s2.5-.6 3.5-2M9 9.5v.4M15 9.5v.4"/>'
 };
 const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${IC[n]||''}</svg>`;
@@ -238,17 +287,18 @@ function cleanDB(x,lenient){
   if(!Array.isArray(x.classes)||!Array.isArray(x.students))throw'فایل شامل کلاس‌ها و دانش‌آموزان نیست';
   const S=v=>String(v??'').slice(0,300),N=v=>Number.isFinite(+v)?Math.max(0,Math.min(MAXAMT,Math.round(+v))):0;
   let drop=0;const ok=(a,f)=>{const seen=new Set();return A(a).filter(o=>{const g=o&&typeof o==='object'&&typeof o.id==='string'&&o.id&&!seen.has(o.id)&&f(o);if(g)seen.add(o.id);else drop++;return g})};
-  const classes=ok('classes',c=>S(c.name).trim()).map(c=>({id:c.id,name:S(c.name).trim(),fee:N(c.fee),total:Math.min(N(c.total),9999),held:Math.min(N(c.held),9999)}));
+  const classes=ok('classes',c=>S(c.name).trim()).map(c=>({id:c.id,name:S(c.name).trim(),fee:N(c.fee),sessions:Math.min(999,N(c.sessions))}));
   const cid=new Set(classes.map(c=>c.id));
   const students=ok('students',s=>S(s.name).trim()&&cid.has(s.classId)).map(s=>({id:s.id,name:S(s.name).trim(),classId:s.classId,fee:s.fee==null?null:N(s.fee),note:S(s.note)}));
   const sid=new Set(students.map(s=>s.id));
   const D=v=>{const m=/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/.exec(unfa(String(v??'')).trim());return m&&+m[2]>=1&&+m[2]<=12&&+m[3]>=1&&+m[3]<=31?`${m[1]}/${pad(m[2])}/${pad(m[3])}`:today()};
   const payments=ok('payments',p=>sid.has(p.studentId)&&N(p.amount)>0).map(p=>({id:p.id,studentId:p.studentId,amount:N(p.amount),date:D(p.date),note:S(p.note)}));
   const reminders=ok('reminders',r=>sid.has(r.studentId)&&S(r.text).trim()).map(r=>({id:r.id,studentId:r.studentId,date:D(r.date),text:S(r.text).trim(),done:!!r.done}));
-  return{d:{v:1,classes,students,payments,reminders},drop};
+  const attendance=ok('attendance',a=>cid.has(a.classId)&&/^\d{4}\/\d{2}\/\d{2}$/.test(String(a.date))&&a.marks&&typeof a.marks==='object'&&!Array.isArray(a.marks)).map(a=>{const marks={};for(const k in a.marks){if(sid.has(k)&&(a.marks[k]==='p'||a.marks[k]==='a'))marks[k]=a.marks[k]}return{id:a.id,classId:a.classId,date:a.date,marks}}).filter(a=>Object.keys(a.marks).length);
+  return{d:{v:1,classes,students,payments,reminders,attendance},drop};
 }
 const DB={
-  d:{v:1,classes:[],students:[],payments:[],reminders:[]},
+  d:{v:1,classes:[],students:[],payments:[],reminders:[],attendance:[]},
   load(){let raw=null;try{raw=localStorage.getItem(KEY)}catch(_){return}
     if(!raw)return;
     try{const c=cleanDB(JSON.parse(raw),true);this.d=c.d;
@@ -261,17 +311,20 @@ const DB={
   upd(c,id,p){const o=this.d[c].find(x=>x.id===id);if(o){Object.assign(o,p);this.save()}return o},
   del(c,id){this.d[c]=this.d[c].filter(x=>x.id!==id);this.save()},
   // حذف دانش‌آموز همراه واریزی‌ها و یادآورهایش
-  delStudent(id){const d=this.d;d.students=d.students.filter(s=>s.id!==id);d.payments=d.payments.filter(p=>p.studentId!==id);d.reminders=d.reminders.filter(r=>r.studentId!==id);this.save()},
+  delStudent(id){const d=this.d;d.students=d.students.filter(s=>s.id!==id);d.payments=d.payments.filter(p=>p.studentId!==id);d.reminders=d.reminders.filter(r=>r.studentId!==id);d.attendance.forEach(a=>{delete a.marks[id]});d.attendance=d.attendance.filter(a=>Object.keys(a.marks).length);this.save()},
   // شهریه‌ی کلاس برای همه: شهریه‌ی اختصاصی دانش‌آموزان کلاس لغو می‌شود (fee=null)
   applyClassFee(id){this.d.students.forEach(s=>{if(s.classId===id)s.fee=null});this.save()},
   // حذف کلاس: to=شناسه‌ی کلاس مقصد (انتقال دانش‌آموزان) یا null (حذف دانش‌آموزان و سوابقشان)
   delClass(id,to){const d=this.d;
-    if(to){d.students.forEach(s=>{if(s.classId===id)s.classId=to})}
+    if(to){d.students.forEach(s=>{if(s.classId===id)s.classId=to});
+      d.attendance.filter(a=>a.classId===id).forEach(a=>{const t=d.attendance.find(x=>x.classId===to&&x.date===a.date);
+        if(t){Object.assign(t.marks,a.marks);d.attendance=d.attendance.filter(x=>x!==a)}else a.classId=to})}
     else{const ids=new Set(d.students.filter(s=>s.classId===id).map(s=>s.id));
       d.students=d.students.filter(s=>!ids.has(s.id));d.payments=d.payments.filter(p=>!ids.has(p.studentId));d.reminders=d.reminders.filter(r=>!ids.has(r.studentId))}
-    d.classes=d.classes.filter(c=>c.id!==id);this.save()}
+    d.attendance=d.attendance.filter(a=>a.classId!==id);d.classes=d.classes.filter(c=>c.id!==id);this.save()}
 };
-/* ساختار: classes{id,name,fee,total,held} | students{id,name,classId,fee(null=شهریه‌ی کلاس),note}
+/* حضور و غیاب: attendance{id,classId,date,marks{studentId:'p'|'a'}}
+   ساختار: classes{id,name,fee} | students{id,name,classId,fee(null=شهریه‌ی کلاس),note}
    payments{id,studentId,amount,date,note} | reminders{id,studentId,date,text,done} */
 
 /* ===== ابزارهای رابط ===== */
@@ -294,21 +347,34 @@ const feeOf=s=>s.fee!=null?s.fee:((DB.d.classes.find(c=>c.id===s.classId)||{}).f
 const avatar=n=>{const a=Array.from(String(n).trim());let h=0;for(const ch of a)h+=ch.codePointAt(0);return`<span class="av c${h%6}" aria-hidden="true">${esc(a[0]||'؟')}</span>`};
 const empty=(i,t)=>`<div class="empty">${ic(i)}<div>${t}</div></div>`;
 const paidMap=()=>{const m=new Map();DB.d.payments.forEach(p=>m.set(p.studentId,(m.get(p.studentId)||0)+p.amount));return m};
+// وضعیت شهریه برای رنگ کادر: g=تسویه (سبز) | y=بخشی پرداخت‌شده (زرد) | r=بدون پرداخت (قرمز)
+function feeState(s,pm){const p=(pm||paidMap()).get(s.id)||0,b=feeOf(s)-p;return b<=0?'g':(p>0?'y':'r')}
+const LEG='<div class="legend"><span class="pill grn">تسویه</span><span class="pill amb">بخشی پرداخت‌شده</span><span class="pill red">بدون پرداخت</span></div>';
 // مانده: مثبت = بدهکار، منفی = طلبکار
 const balanceOf=(s,pm)=>feeOf(s)-((pm||paidMap()).get(s.id)||0);
 function stateHtml(b){return b>0?`<b class="neg">بدهکار: ${money(b)} تومان</b>`:b<0?`<b class="pos">طلبکار: ${money(-b)} تومان</b>`:'<b class="pos">تسویه</b>'}
 
 /* ===== ناوبری و صفحه‌ی اصلی ===== */
-const MENU=[['classes','classes','کلاس‌ها'],['students','students','دانش‌آموزان'],['pay','pay','واریزی'],['debt','debt','بدهکاران'],['dash','dash','داشبورد'],['backup','backup','پشتیبان']];
+const MENU=[['classes','classes','کلاس‌ها'],['students','students','دانش‌آموزان'],['att','att','حضور و غیاب'],['pay','pay','واریزی'],['debt','debt','بدهکاران'],['dash','dash','داشبورد'],['backup','backup','پشتیبان و رمز']];
 const TITLE=Object.fromEntries(MENU.map(m=>[m[0],m[2]]));
 const PAGES={};
 const app=document.getElementById('app');
 let cur='home';
-function go(p){cur=p;history.pushState({p},'');render()}
-window.onpopstate=e=>{cur=(e.state&&e.state.p)||'home';render()};
+let navDir='',navBusy=false,navQ=[],locked=false;
+function nav(fn,dir){
+  navDir=dir;
+  if(navBusy){navQ.push(fn);return}
+  const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if(rm||locked||!app.firstElementChild){fn();return}
+  navBusy=true;app.className='out-'+dir;
+  setTimeout(()=>{try{fn();navQ.splice(0).forEach(f=>f())}finally{navBusy=false}},150);
+}
+function go(p){nav(()=>{cur=p;history.pushState({p},'');render()},'f')}
+window.onpopstate=e=>{const p=(e.state&&e.state.p)||'home';nav(()=>{cur=p;render()},'b')};
 function render(){
   document.querySelectorAll('.modal').forEach(m=>m.remove());
   window.scrollTo(0,0);
+  app.className=navDir;navDir='';
   if(cur==='home'){
     const d=DB.d,pm=paidMap();let debt=0;d.students.forEach(s=>{const b=balanceOf(s,pm);if(b>0)debt+=b});
     let lb='';try{lb=localStorage.getItem(LB)||''}catch(_){}
@@ -332,64 +398,42 @@ function render(){
 PAGES.classes=el=>{
   el.innerHTML=`<div class="card"><b class="ttl">${ic('plus')}کلاس جدید</b><label>نام کلاس</label><input id="cn" autocomplete="off" placeholder="مثلاً ریاضی پنجم">
   <label>شهریه (تومان)</label><input id="cf" inputmode="numeric" data-money placeholder="۰" autocomplete="off">
-  <label>تعداد کل جلسات (اختیاری)</label><input id="ct" inputmode="numeric" placeholder="مثلاً ۲۰" autocomplete="off">
+  <label>تعداد کل جلسات</label><input id="cs" inputmode="numeric" placeholder="مثلاً ۲۰" autocomplete="off">
   <div class="row"><button class="btn" id="ca">${ic('plus')}افزودن کلاس</button></div></div><div class="card" id="cl"></div>`;
-  const cn=el.querySelector('#cn'),cf=el.querySelector('#cf'),ct=el.querySelector('#ct'),cl=el.querySelector('#cl');
+  const cn=el.querySelector('#cn'),cf=el.querySelector('#cf'),cs=el.querySelector('#cs'),cl=el.querySelector('#cl');
   const dup=(name,skip)=>DB.d.classes.some(c=>c.id!==skip&&norm(c.name)===norm(name));
   const list=()=>{const a=DB.d.classes;
     cl.innerHTML=a.length?a.map(c=>`<div class="item" data-id="${c.id}">${avatar(c.name)}<div class="nm"><b>${esc(c.name)}</b>
-      <span class="muted">${fa(countIn(c.id))} دانش‌آموز · ${c.fee?money(c.fee)+' تومان':'بدون شهریه'}</span>${sessHtml(c)}</div>
-      <button class="ic" data-a="s" aria-label="جلسات">${ic('cal')}</button><button class="ic am" data-a="f" aria-label="اعمال شهریه برای همه">${ic('fee')}</button><button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`).join('')
+      <span class="muted">${fa(countIn(c.id))} دانش‌آموز · ${c.fee?money(c.fee)+' تومان':'بدون شهریه'}</span>
+      ${c.sessions?`<span class="muted">${fa(heldOf(c.id))} جلسه برگزار شده از ${fa(c.sessions)} · ${fa(Math.max(0,c.sessions-heldOf(c.id)))} مانده</span>`:`<span class="muted">${fa(heldOf(c.id))} جلسه برگزار شده</span>`}</div>
+      <button class="ic am" data-a="f" aria-label="اعمال شهریه برای همه">${ic('fee')}</button><button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`).join('')
       :empty('classes','هنوز کلاسی ثبت نشده است.<br>از کارت بالا اولین کلاس را بسازید.')};
-  const add=()=>{const name=cn.value.trim().replace(/\s+/g,' '),fee=num(cf.value),total=num(ct.value);
+  const add=()=>{const name=cn.value.trim().replace(/\s+/g,' '),fee=num(cf.value),ses=num(cs.value);
     if(!name){toast('نام کلاس را بنویسید');cn.focus();return}
+    if(ses>999){toast('تعداد جلسات بیش از حد مجاز است');return}
     if(dup(name)){toast('کلاسی با این نام وجود دارد');return}
     if(fee>MAXAMT){toast('شهریه بیش از حد مجاز است');return}
-    if(total>9999){toast('تعداد جلسات بیش از حد مجاز است');return}DB.add('classes',{name,fee,total,held:0});cn.value=cf.value=ct.value='';cn.focus();list();toast('کلاس ثبت شد')};
+    DB.add('classes',{name,fee,sessions:ses});cn.value=cf.value=cs.value='';cn.focus();list();toast('کلاس ثبت شد')};
   el.querySelector('#ca').onclick=add;
-  [cn,cf,ct].forEach(i=>i.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();add()}});
+  [cn,cf,cs].forEach(i=>i.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();add()}});
   cl.onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
     const c=DB.d.classes.find(x=>x.id===b.closest('.item').dataset.id);if(!c)return;
-    ({e:editClass,d:delClass,f:applyFee,s:sessionsModal})[b.dataset.a](c,list)};
+    ({e:editClass,d:delClass,f:applyFee})[b.dataset.a](c,list)};
   list();
 };
-// جلسات: total=کل جلسات برنامه‌ریزی‌شده (۰=تعیین نشده) | held=جلسات برگزارشده
-const sessHtml=c=>{const t=c.total||0,h=c.held||0;
-  if(!t&&!h)return'<span class="muted">جلسات: تعیین نشده</span>';
-  if(!t)return`<span class="muted">جلسات: ${fa(h)} برگزار شد · کل تعیین نشده</span>`;
-  const r=Math.max(0,t-h),p=Math.min(100,Math.round(h/t*100));
-  return`<span class="muted">جلسات: ${fa(h)} برگزار شد از ${fa(t)} · <b>${fa(r)}</b> باقی‌مانده</span><div class="bar"><i style="width:${p}%"></i></div>`};
-function sessionsModal(c,done){
-  let held=c.held||0;
-  const w=modal(`<b class="ttl">${ic('cal')}جلسات «${esc(c.name)}»</b>
-  <label>تعداد کل جلسات</label><input id="st" inputmode="numeric" value="${c.total?fa(c.total):''}" placeholder="۰" autocomplete="off">
-  <label>جلسات برگزارشده</label>
-  <div class="row"><button class="btn gr" id="mn" aria-label="کم کردن یک جلسه">−</button><b id="hv" style="flex:1;text-align:center;font-size:22px"></b><button class="btn" id="pl">${ic('plus')}جلسه برگزار شد</button></div>
-  <div class="kv"><span>باقی‌مانده</span><b id="rm"></b></div>
-  <div class="row"><button class="btn" id="ok">ذخیره</button><button class="btn gr" id="no">انصراف</button></div>`);
-  const $=i=>w.querySelector('#'+i),tot=()=>num($('st').value);
-  const show=()=>{$('hv').textContent=fa(held);const t=tot();$('rm').textContent=t?fa(Math.max(0,t-held)):'—'};
-  $('pl').onclick=()=>{const t=tot();if(t&&held>=t){toast('همه‌ی جلسات برگزار شده‌اند');return}if(held>=9999)return;held++;show()};
-  $('mn').onclick=()=>{if(held>0){held--;show()}};
-  $('st').addEventListener('input',show);
-  $('no').onclick=()=>w.remove();
-  $('ok').onclick=()=>{const t=tot();
-    if(t>9999){toast('تعداد جلسات بیش از حد مجاز است');return}
-    if(t&&t<held){toast('کل جلسات نمی‌تواند کمتر از جلسات برگزارشده باشد');return}
-    DB.upd('classes',c.id,{total:t,held});w.remove();done();toast('ذخیره شد')};
-  show();
-}
 function editClass(c,done){
   const w=modal(`<b class="ttl">${ic('edit')}ویرایش کلاس</b><label>نام کلاس</label><input id="en" value="${esc(c.name)}" autocomplete="off">
   <label>شهریه (تومان)</label><input id="ef" inputmode="numeric" data-money value="${c.fee?money(c.fee):''}">
+  <label>تعداد کل جلسات</label><input id="es" inputmode="numeric" value="${c.sessions||''}">
   <p class="muted">شهریه‌ی دانش‌آموزانی که شهریه‌ی اختصاصی ندارند هم تغییر می‌کند.</p>
   <div class="row"><button class="btn" id="ok">ذخیره</button><button class="btn gr" id="no">انصراف</button></div>`);
   w.querySelector('#no').onclick=()=>w.remove();
-  w.querySelector('#ok').onclick=()=>{const name=w.querySelector('#en').value.trim().replace(/\s+/g,' '),fee=num(w.querySelector('#ef').value);
+  w.querySelector('#ok').onclick=()=>{const name=w.querySelector('#en').value.trim().replace(/\s+/g,' '),fee=num(w.querySelector('#ef').value),ses=num(w.querySelector('#es').value);
     if(!name){toast('نام کلاس را بنویسید');return}
+    if(ses>999){toast('تعداد جلسات بیش از حد مجاز است');return}
     if(DB.d.classes.some(x=>x.id!==c.id&&norm(x.name)===norm(name))){toast('کلاسی با این نام وجود دارد');return}
     if(fee>MAXAMT){toast('شهریه بیش از حد مجاز است');return}
-    DB.upd('classes',c.id,{name,fee});w.remove();done();toast('ذخیره شد')};
+    DB.upd('classes',c.id,{name,fee,sessions:ses});w.remove();done();toast('ذخیره شد')};
 }
 function applyFee(c,done){
   const st=DB.d.students.filter(s=>s.classId===c.id),ind=st.filter(s=>s.fee!=null).length;
@@ -420,13 +464,13 @@ PAGES.students=el=>{
   if(selClass!=='all'&&!cls.some(c=>c.id===selClass))selClass=cls[0].id;
   el.innerHTML=`<div class="card"><label>کلاس</label><select id="sc">${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}<option value="all">همه‌ی کلاس‌ها</option></select>
   <label>نام دانش‌آموز (با Enter ثبت می‌شود)</label><div class="inl"><input id="sn" enterkeyhint="done" autocomplete="off" placeholder="نام و نام خانوادگی"><button class="btn" id="sa" aria-label="ثبت">${ic('plus')}ثبت</button></div></div>
-  <div class="card"><div class="search">${ic('search')}<input id="sq" type="search" placeholder="جستجو در لیست…" autocomplete="off" aria-label="جستجو"></div><div class="muted" id="cnt" style="margin:10px 2px 8px"></div><div id="sl"></div></div>`;
+  <div class="card"><div class="search">${ic('search')}<input id="sq" type="search" placeholder="جستجو در لیست…" autocomplete="off" aria-label="جستجو"></div><div class="muted" id="cnt" style="margin:10px 2px 8px"></div>${LEG}<div id="sl"></div></div>`;
   const $=i=>el.querySelector('#'+i),sc=$('sc'),sn=$('sn'),sq=$('sq'),sl=$('sl');
   sc.value=selClass;
   const list=()=>{const nq=norm(sq.value),cn=Object.fromEntries(DB.d.classes.map(c=>[c.id,c.name]));
     const a=DB.d.students.filter(s=>(selClass==='all'||s.classId===selClass)&&(!nq||norm(s.name).includes(nq))).sort((x,y)=>collator.compare(x.name,y.name));
     $('cnt').textContent=fa(a.length)+' دانش‌آموز';
-    sl.innerHTML=a.map(s=>`<div class="item" data-id="${s.id}">${avatar(s.name)}<div class="nm"><b>${esc(s.name)}</b>
+    const pm=paidMap();sl.innerHTML=a.map((s,i)=>`<div class="item fs fs-${feeState(s,pm)}" data-id="${s.id}"><span class="rn">${fa(i+1)}</span>${avatar(s.name)}<div class="nm"><b>${esc(s.name)}</b>
       <span class="muted">${[selClass==='all'?esc(cn[s.classId]||''):'',money(feeOf(s))+' تومان'+(s.fee!=null?' (اختصاصی)':''),s.note?esc(s.note):''].filter(Boolean).join(' · ')}</span></div>
       <button class="ic" data-a="e" aria-label="ویرایش">${ic('edit')}</button><button class="ic dg" data-a="d" aria-label="حذف">${ic('trash')}</button></div>`).join('')||empty('students','موردی یافت نشد.')};
   const add=()=>{const name=sn.value.trim().replace(/\s+/g,' ');
@@ -462,8 +506,8 @@ function delStudent(s,done){
 }
 
 /* ===== واریزی‌ها ===== */
-let payClass=null,payStu=null;
-PAGES.pay=el=>{
+let payClass=null,payStu=null,payMode='one',gDate=null,gSel={};
+function payOne(el){
   const cls=DB.d.classes;
   if(!cls.length||!DB.d.students.length){
     el.innerHTML=`<div class="card">${empty('pay','ابتدا کلاس و دانش‌آموز ثبت کنید.<br>واریزی برای هر دانش‌آموز ثبت می‌شود.')}<button class="btn block" id="gc">${cls.length?'رفتن به دانش‌آموزان':'رفتن به کلاس‌ها'}</button></div>`;
@@ -518,7 +562,62 @@ PAGES.pay=el=>{
   pc.onchange=()=>{payClass=pc.value;payStu=null;fillStu();body()};
   ps.onchange=()=>{payStu=ps.value;body()};
   fillStu();body();
+}
+PAGES.pay=el=>{
+  if(!DB.d.classes.length||!DB.d.students.length){payOne(el);return}
+  el.innerHTML=`<div class="seg" role="tablist"><button id="m1" role="tab">تکی</button><button id="m2" role="tab">گروهی</button></div><div id="pm"></div>`;
+  const m1=el.querySelector('#m1'),m2=el.querySelector('#m2'),pm=el.querySelector('#pm');
+  const show=()=>{m1.className=payMode==='one'?'on':'';m2.className=payMode==='grp'?'on':'';
+    m1.setAttribute('aria-selected',payMode==='one');m2.setAttribute('aria-selected',payMode==='grp');
+    payMode==='one'?payOne(pm):payGroup(pm);linkLabels(pm)};
+  m1.onclick=()=>{payMode='one';show()};m2.onclick=()=>{payMode='grp';show()};
+  show();
 };
+function payGroup(box){
+  const cls=DB.d.classes;
+  if(!cls.some(c=>c.id===payClass))payClass=(cls.find(c=>countIn(c.id))||cls[0]).id;
+  if(!gDate)gDate=today();
+  box.innerHTML=`<div class="card"><label>کلاس</label><select id="gc">${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>
+  <label>تاریخ</label><input id="gd" readonly>
+  <label>یادداشت (اختیاری)</label><input id="gn" autocomplete="off">
+  <label>مبلغ یکسان (تومان)</label><div class="inl"><input id="ga" inputmode="numeric" data-money placeholder="۰" autocomplete="off"><button class="btn gr" id="gf">اعمال برای انتخاب‌شده‌ها</button></div>
+  <div class="row wrap"><button class="btn gr" id="g1">همه</button><button class="btn gr" id="g2">بدهکاران</button><button class="btn gr" id="g3">مبلغ = بدهی</button></div></div>
+  <div class="card"><b class="ttl">${ic('students')}انتخاب دانش‌آموزان و مبلغ</b><div class="muted" style="margin-bottom:8px">تیک بزنید و مبلغ هر نفر را وارد کنید (با نوشتن مبلغ، تیک خودکار زده می‌شود).</div><div id="gl"></div></div>
+  <div class="card"><div class="status s-c"><span id="gs"></span></div><button class="btn block" id="gk" style="margin-top:12px">${ic('check')}ثبت واریزی‌ها</button></div>`;
+  const $=i=>box.querySelector('#'+i),gc=$('gc'),gl=$('gl');
+  gc.value=payClass;$('gd').value=fmtDate(gDate);
+  const stu=()=>DB.d.students.filter(s=>s.classId===payClass).sort((x,y)=>collator.compare(x.name,y.name));
+  const sel=id=>gSel[id]||(gSel[id]={on:false,amt:0});
+  const upd=()=>{let n=0,t=0,miss=0;stu().forEach(s=>{const r=gSel[s.id];if(r&&r.on){if(r.amt>0){n++;t+=r.amt}else miss++}});
+    $('gs').textContent=n?`${fa(n)} نفر · جمع ${money(t)} تومان`+(miss?` · ${fa(miss)} نفر بدون مبلغ`:''):(miss?`${fa(miss)} نفر انتخاب شده؛ مبلغ وارد نشده`:'دانش‌آموزی انتخاب نشده')};
+  const draw=()=>{const a=stu(),pm=paidMap();
+    gl.innerHTML=a.length?LEG+a.map((s,i)=>{const b=balanceOf(s,pm),r=gSel[s.id]||{on:false,amt:0};
+      return`<div class="item fs fs-${feeState(s,pm)}" data-id="${s.id}"><input type="checkbox" class="ck" aria-label="انتخاب ${esc(s.name)}"${r.on?' checked':''}><span class="rn">${fa(i+1)}</span><div class="nm"><b>${esc(s.name)}</b><span class="muted">${b>0?'بدهی '+money(b):b<0?'طلبکار '+money(-b):'تسویه'}</span></div><input class="amt" inputmode="numeric" data-money placeholder="۰" aria-label="مبلغ ${esc(s.name)}" value="${r.amt?money(r.amt):''}"></div>`}).join(''):empty('students','این کلاس دانش‌آموزی ندارد.');
+    upd()};
+  gl.onchange=e=>{const c=e.target.closest('.ck');if(!c)return;sel(c.closest('.item').dataset.id).on=c.checked;upd()};
+  gl.oninput=e=>{const i=e.target.closest('.amt');if(!i)return;const it=i.closest('.item'),r=sel(it.dataset.id);
+    r.amt=num(i.value);if(r.amt>0){r.on=true;it.querySelector('.ck').checked=true}upd()};
+  gc.onchange=()=>{payClass=gc.value;gSel={};draw()};
+  $('gd').onclick=()=>pickDate(gDate,v=>{gDate=v;$('gd').value=fmtDate(v)});
+  $('g1').onclick=()=>{const a=stu(),all=a.length&&a.every(s=>(gSel[s.id]||{}).on);a.forEach(s=>{sel(s.id).on=!all});draw()};
+  $('g2').onclick=()=>{const pm=paidMap();stu().forEach(s=>{sel(s.id).on=balanceOf(s,pm)>0});draw()};
+  $('g3').onclick=()=>{const pm=paidMap();let n=0;stu().forEach(s=>{const r=sel(s.id);if(r.on){const b=balanceOf(s,pm);if(b>0){r.amt=b;n++}}});
+    if(!n){toast('ابتدا بدهکارها را انتخاب کنید');return}draw()};
+  $('gf').onclick=()=>{const v=num($('ga').value);
+    if(v<=0){toast('مبلغ یکسان را وارد کنید');$('ga').focus();return}
+    if(v>MAXAMT){toast('مبلغ بیش از حد مجاز است');return}
+    let n=0;stu().forEach(s=>{const r=sel(s.id);if(r.on){r.amt=v;n++}});
+    if(!n){toast('ابتدا دانش‌آموزان را انتخاب کنید');return}draw();toast('مبلغ برای '+fa(n)+' نفر اعمال شد')};
+  $('gk').onclick=()=>{const a=stu(),rows=a.filter(s=>{const r=gSel[s.id];return r&&r.on&&r.amt>0}),miss=a.filter(s=>{const r=gSel[s.id];return r&&r.on&&!(r.amt>0)}).length;
+    if(!rows.length){toast('واریزی‌ای برای ثبت نیست؛ دانش‌آموز و مبلغ را وارد کنید');return}
+    if(rows.some(s=>gSel[s.id].amt>MAXAMT)){toast('مبلغ یکی از ردیف‌ها بیش از حد مجاز است');return}
+    const tot=rows.reduce((t,s)=>t+gSel[s.id].amt,0);
+    confirmBox(`برای ${fa(rows.length)} نفر، جمعاً ${money(tot)} تومان با تاریخ ${fmtDate(gDate)} ثبت شود؟`+(miss?` (${fa(miss)} نفر انتخاب‌شده که مبلغ ندارد نادیده گرفته می‌شود)`:''),'ثبت شود',()=>{
+      const note=$('gn').value.trim();
+      rows.forEach(s=>{DB.add('payments',{studentId:s.id,amount:gSel[s.id].amt,date:gDate,note});delete gSel[s.id]});
+      draw();toast('واریزی '+fa(rows.length)+' نفر ثبت شد')})};
+  draw();
+}
 function editPayment(p,done){
   let date=p.date;
   const w=modal(`<b class="ttl">${ic('edit')}ویرایش واریزی</b><label>مبلغ (تومان)</label><input id="ea" inputmode="numeric" data-money value="${money(p.amount)}">
@@ -577,7 +676,7 @@ function debtors(dv){
   dc.onchange=()=>{debtClass=dc.value;list()};dq.oninput=list;
   dl.onclick=e=>{const b=e.target.closest('button[data-a]');if(!b)return;
     const s=DB.d.students.find(x=>x.id===b.closest('.item').dataset.id);if(!s)return;
-    if(b.dataset.a==='p'){payClass=s.classId;payStu=s.id;go('pay')}else reminderModal(s,null,list)};
+    if(b.dataset.a==='p'){payClass=s.classId;payStu=s.id;payMode='one';go('pay')}else reminderModal(s,null,list)};
   list();
 }
 function reminders(dv){
@@ -596,6 +695,91 @@ function reminders(dv){
     if(b.dataset.a==='k'){DB.upd('reminders',r.id,{done:!r.done});list()}
     else if(b.dataset.a==='e')reminderModal(DB.d.students.find(s=>s.id===r.studentId),r,list);
     else confirmBox('این یادآور حذف شود؟','حذف',()=>{DB.del('reminders',r.id);list();toast('حذف شد')})};
+  list();
+}
+
+/* ===== حضور و غیاب ===== */
+let attClass=null,attDate=null,ovClass='all';
+function shiftDate(s,n){const[a,b,c]=s.split('/').map(Number),g=j2g(a,b,c),d=new Date(g[0],g[1]-1,g[2]+n),j=g2j(d.getFullYear(),d.getMonth()+1,d.getDate());return`${j[0]}/${pad(j[1])}/${pad(j[2])}`}
+function dayName(s){const[a,b,c]=s.split('/').map(Number),g=j2g(a,b,c);return WEEK[new Date(g[0],g[1]-1,g[2]).getDay()]}
+const dateLbl=s=>fa(dayName(s))+' '+fmtDate(s);
+const heldOf=cid=>DB.d.attendance.filter(a=>a.classId===cid).length;
+const attSess=(cid,dt)=>DB.d.attendance.find(a=>a.classId===cid&&a.date===dt);
+// v: 'p' | 'a' | null (پاک کردن)
+function attSet(cid,dt,ids,v){
+  let s=attSess(cid,dt);
+  if(!s){if(!v)return;s={id:DB.uid(),classId:cid,date:dt,marks:{}};DB.d.attendance.push(s)}
+  ids.forEach(i=>{if(v)s.marks[i]=v;else delete s.marks[i]});
+  if(!Object.keys(s.marks).length)DB.d.attendance=DB.d.attendance.filter(x=>x!==s);
+  DB.save();
+}
+function attStats(){const m=new Map();DB.d.attendance.forEach(a=>{for(const k in a.marks){const r=m.get(k)||{p:0,a:0};r[a.marks[k]]++;m.set(k,r)}});return m}
+PAGES.att=el=>{
+  const cls=DB.d.classes;
+  if(!cls.length){el.innerHTML=`<div class="card">${empty('classes','هنوز کلاسی ثبت نشده است.<br>ابتدا یک کلاس بسازید.')}<button class="btn block" id="gc">رفتن به کلاس‌ها</button></div>`;
+    el.querySelector('#gc').onclick=()=>go('classes');return}
+  if(!cls.some(c=>c.id===attClass))attClass=cls[0].id;
+  if(!attDate)attDate=today();
+  el.innerHTML=`<div class="card"><label>کلاس</label><select id="ac">${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>
+  <label>تاریخ جلسه</label><div class="inl"><button class="ic" id="ap" style="width:48px;height:48px" aria-label="روز قبل">${ic('chev')}</button><input id="ad" readonly aria-label="تاریخ" style="text-align:center;font-weight:700"><button class="ic" id="an" style="width:48px;height:48px" aria-label="روز بعد"><span style="display:flex;transform:scaleX(-1)">${ic('chev')}</span></button></div>
+  <div class="pills" id="asum"></div><div class="pills" id="ases"></div>
+  <div class="row"><button class="btn gr" id="aall">${ic('check')}همه حاضر</button><button class="btn gr" id="aclr">${ic('undo')}پاک کردن</button></div></div>
+  <div class="card" id="al"></div>
+  <div class="card"><b class="ttl">${ic('cal')}جلسات ثبت‌شده‌ی این کلاس</b><div class="muted">برای ثبت یا ویرایش جلسات قبل، روی تاریخ بزنید.</div><div id="ah"></div></div>`;
+  const $=i=>el.querySelector('#'+i),ac=$('ac');
+  ac.value=attClass;
+  const students=()=>DB.d.students.filter(s=>s.classId===attClass).sort((x,y)=>collator.compare(x.name,y.name));
+  const list=()=>{
+    const st=students(),se=attSess(attClass,attDate),mk=se?se.marks:{};
+    let p=0,a=0;st.forEach(s=>{if(mk[s.id]==='p')p++;else if(mk[s.id]==='a')a++});
+    $('ad').value=dateLbl(attDate);
+    $('asum').innerHTML=`<span class="pill grn">حاضر: ${fa(p)}</span><span class="pill red">غایب: ${fa(a)}</span><span class="pill amb">ثبت‌نشده: ${fa(st.length-p-a)}</span>`;
+    {const c=cls.find(x=>x.id===attClass),h=heldOf(attClass),t=c&&c.sessions||0,
+      all=DB.d.attendance.filter(x=>x.classId===attClass).map(x=>x.date).sort(),ix=all.indexOf(attDate);
+      $('ases').innerHTML=`<span class="pill grn">برگزار شده: ${fa(h)}${t?' از '+fa(t):''}</span>`+(t?`<span class="pill ${t-h>0?'amb':'red'}">مانده: ${fa(Math.max(0,t-h))}</span>`:'')+(ix>=0?`<span class="pill">این جلسه: شماره ${fa(ix+1)}</span>`:'')}
+    const pm=paidMap();$('al').innerHTML=(st.length?LEG:'')+st.map((s,i)=>`<div class="item fs fs-${feeState(s,pm)}" data-id="${s.id}"><span class="rn">${fa(i+1)}</span>${avatar(s.name)}<div class="nm"><b>${esc(s.name)}</b></div>
+      <div class="mk"><button class="p${mk[s.id]==='p'?' on':''}" data-v="p" aria-pressed="${mk[s.id]==='p'}">حاضر</button><button class="a${mk[s.id]==='a'?' on':''}" data-v="a" aria-pressed="${mk[s.id]==='a'}">غایب</button></div></div>`).join('')+(st.length?'':empty('students','این کلاس دانش‌آموزی ندارد.<br>از بخش دانش‌آموزان اضافه کنید.'));
+  };
+  const hist=()=>{
+    const a=DB.d.attendance.filter(x=>x.classId===attClass).sort((x,y)=>x.date<y.date?1:x.date>y.date?-1:0),tot=a.length;
+    $('ah').innerHTML=a.map((x,i)=>{let p=0,b=0;for(const k in x.marks){x.marks[k]==='p'?p++:b++}
+      return`<div class="item${x.date===attDate?' cur':''}" data-d="${x.date}" style="cursor:pointer"><span class="rn">${fa(tot-i)}</span><span class="av c4" aria-hidden="true">${ic('cal')}</span>
+      <div class="nm"><b>جلسه ${fa(tot-i)} · ${dateLbl(x.date)}</b><span class="muted">حاضر ${fa(p)} · غایب ${fa(b)}</span></div>
+      <button class="ic dg" data-a="d" aria-label="حذف جلسه">${ic('trash')}</button></div>`}).join('')||empty('att','هنوز جلسه‌ای ثبت نشده است.')};
+  const setDate=d=>{attDate=d;list();hist()};
+  ac.onchange=()=>{attClass=ac.value;list();hist()};
+  $('ap').onclick=()=>setDate(shiftDate(attDate,-1));
+  $('an').onclick=()=>setDate(shiftDate(attDate,1));
+  $('ad').onclick=()=>pickDate(attDate,setDate);
+  $('aall').onclick=()=>{const ids=students().map(s=>s.id);if(!ids.length)return;attSet(attClass,attDate,ids,'p');list();hist();toast('همه حاضر ثبت شدند')};
+  $('aclr').onclick=()=>{const se=attSess(attClass,attDate);if(!se){toast('برای این تاریخ چیزی ثبت نشده');return}
+    confirmBox(`حضور و غیاب ${dateLbl(attDate)} پاک شود؟`,'پاک شود',()=>{attSet(attClass,attDate,Object.keys(se.marks),null);list();hist();toast('پاک شد')})};
+  $('al').onclick=e=>{const b=e.target.closest('button[data-v]');if(!b)return;
+    const id=b.closest('.item').dataset.id,se=attSess(attClass,attDate),cur=se&&se.marks[id];
+    attSet(attClass,attDate,[id],cur===b.dataset.v?null:b.dataset.v);list();hist()};
+  $('ah').onclick=e=>{const it=e.target.closest('.item');if(!it)return;const d=it.dataset.d;
+    if(e.target.closest('button[data-a="d"]')){confirmBox(`جلسه‌ی ${dateLbl(d)} حذف شود؟`,'حذف',()=>{const se=attSess(attClass,d);if(se){attSet(attClass,d,Object.keys(se.marks),null)}list();hist();toast('حذف شد')});return}
+    setDate(d);window.scrollTo({top:0,behavior:'smooth'})};
+  list();hist();
+};
+function attOverview(box){
+  const cls=DB.d.classes;
+  if(ovClass!=='all'&&!cls.some(c=>c.id===ovClass))ovClass='all';
+  box.innerHTML=`<select id="ovc" aria-label="کلاس"><option value="all">همه‌ی کلاس‌ها</option>${cls.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select>
+  <div class="muted" id="ovs" style="margin:10px 2px 4px"></div><div id="ovl"></div>`;
+  const ovc=box.querySelector('#ovc'),ovl=box.querySelector('#ovl');ovc.value=ovClass;
+  const list=()=>{
+    const stt=attStats(),cn=Object.fromEntries(cls.map(c=>[c.id,c.name]));
+    const n=DB.d.attendance.filter(a=>ovClass==='all'||a.classId===ovClass).length;
+    const rows=DB.d.students.filter(s=>ovClass==='all'||s.classId===ovClass).map(s=>({s,r:stt.get(s.id)||{p:0,a:0}}))
+      .sort((x,y)=>collator.compare(x.s.name,y.s.name));
+    box.querySelector('#ovs').textContent=fa(n)+' جلسه ثبت شده · '+fa(rows.length)+' دانش‌آموز';
+    ovl.innerHTML=rows.map(({s,r},i)=>{const t=r.p+r.a;
+      return`<div class="item"><span class="rn">${fa(i+1)}</span>${avatar(s.name)}<div class="nm"><b>${esc(s.name)}</b>
+      <span class="muted">${ovClass==='all'?esc(cn[s.classId]||'')+' · ':''}${t?'حضور '+fa(Math.round(r.p/t*100))+'٪':'بدون سابقه'}</span></div>
+      <span class="pill grn">حاضر ${fa(r.p)}</span><span class="pill ${r.a?'red':''}">غایب ${fa(r.a)}</span></div>`}).join('')||empty('students','دانش‌آموزی ثبت نشده است.');
+  };
+  ovc.onchange=()=>{ovClass=ovc.value;list()};
   list();
 }
 
@@ -622,14 +806,16 @@ PAGES.dash=el=>{
   <div class="kv"><span>تعداد کلاس / دانش‌آموز</span><b>${fa(d.classes.length)} / ${fa(d.students.length)}</b></div>
   <div class="kv"><span>یادآورهای فعال</span><b>${fa(rp.length)}${late?` <span class="pill red">${fa(late)} سررسید</span>`:''}</b></div></div>
   <div class="card"><b class="ttl">${ic('classes')}وضعیت کلاس‌ها</b><div id="dcl"></div></div>
+  <div class="card"><b class="ttl">${ic('att')}حضور و غیاب دانش‌آموزان</b><div id="dat"></div></div>
   <div class="card"><b class="ttl">${ic('pay')}آخرین واریزی‌ها</b>${recent.map(p=>{const s=sm.get(p.studentId);return`<div class="kv"><span>${esc(s.name)} <span class="muted">· ${fmtDate(p.date)}</span></span><b class="pos">${money(p.amount)}</b></div>`}).join('')||empty('pay','واریزی ثبت نشده است.')}</div>`;
   const dcl=el.querySelector('#dcl');
   dcl.innerHTML=[...cs.values()].sort((a,b)=>b.debt-a.debt||collator.compare(a.c.name,b.c.name)).map(r=>{const p=pct(r.paid,r.fee);
     return`<div class="item" data-id="${r.c.id}" style="cursor:pointer">${avatar(r.c.name)}<div class="nm"><b>${esc(r.c.name)}</b>
-    <span class="muted">${fa(r.n)} نفر · دریافتی ${money(r.paid)} از ${money(r.fee)}${r.c.total?` · جلسه ${fa(r.c.held||0)} از ${fa(r.c.total)}`:''}</span>
+    <span class="muted">${fa(r.n)} نفر · دریافتی ${money(r.paid)} از ${money(r.fee)}</span>
     <div class="bar"><i style="width:${p}%"></i></div></div>
     ${r.debt?`<span class="pill red" style="white-space:nowrap">${money(r.debt)}</span>`:`<span class="pill grn">${ic('check')}</span>`}</div>`}).join('')||empty('classes','کلاسی ثبت نشده است.');
   dcl.onclick=e=>{const it=e.target.closest('.item');if(it){debtTab='d';debtClass=it.dataset.id;go('debt')}};
+  attOverview(el.querySelector('#dat'));
 };
 
 /* ===== پشتیبان‌گیری و PWA ===== */
@@ -638,14 +824,16 @@ PAGES.backup=el=>{
     let lb='';try{lb=localStorage.getItem(LB)||''}catch(_){}
     return`<div class="kv"><span>کلاس / دانش‌آموز</span><b>${fa(d.classes.length)} / ${fa(d.students.length)}</b></div>
     <div class="kv"><span>واریزی / یادآور</span><b>${fa(d.payments.length)} / ${fa(d.reminders.length)}</b></div>
+    <div class="kv"><span>جلسات حضور و غیاب</span><b>${fa(d.attendance.length)}</b></div>
     <div class="kv"><span>حجم داده</span><b>${fa(kb)} کیلوبایت</b></div>
     <div class="kv"><span>آخرین پشتیبان</span><b${lb?'':' class="neg"'}>${lb?fmtDate(lb):'هرگز'}</b></div>`};
-  el.innerHTML=`<div class="card"><b class="ttl">${ic('dash')}وضعیت داده‌ها</b><div id="bi"></div></div>
+  el.innerHTML=`<div class="card"><b class="ttl">${ic('lock')}رمز عبور برنامه</b><div id="sec"></div></div>
+  <div class="card"><b class="ttl">${ic('dash')}وضعیت داده‌ها</b><div id="bi"></div></div>
   <div class="card"><b class="ttl">${ic('backup')}گرفتن پشتیبان</b><p class="muted">داده‌ها فقط روی همین گوشی ذخیره می‌شوند؛ فایل پشتیبان را جای امنی نگه دارید (مثلاً ارسال برای خودتان).</p>
   <div class="row"><button class="btn" id="ex">${ic('backup')}دانلود فایل پشتیبان</button></div></div>
   <div class="card"><b class="ttl">${ic('up')}بازیابی از پشتیبان</b><p class="muted">داده‌های فعلی با محتوای فایل جایگزین می‌شود (نسخه‌ی قبلی یک‌بار نگه‌داری می‌شود).</p>
   <input type="file" id="fi" accept=".json,application/json" aria-label="فایل پشتیبان"><div class="row"><button class="btn gr" id="un">${ic('undo')}بازگشت به نسخه‌ی پیش از بازیابی</button></div></div>`;
-  const bi=el.querySelector('#bi');bi.innerHTML=info();
+  const bi=el.querySelector('#bi');bi.innerHTML=info();secInit(el.querySelector('#sec'));
   el.querySelector('#ex').onclick=()=>{
     const b=new Blob([JSON.stringify(DB.d)],{type:'application/json'}),a=document.createElement('a');
     a.href=URL.createObjectURL(b);a.download=`cm-backup-${today().replace(/\//g,'-')}.json`;document.body.appendChild(a);a.click();a.remove();
@@ -662,19 +850,90 @@ PAGES.backup=el=>{
     if(!p){toast('نسخه‌ی قبلی وجود ندارد');return}
     confirmBox('داده‌ها به نسخه‌ی پیش از آخرین بازیابی برگردد؟','بازگردان',()=>{try{DB.d=cleanDB(p,true).d;DB.save();localStorage.removeItem(PREV);bi.innerHTML=info();toast('بازگردانی شد')}catch(_){toast('بازگردانی ناموفق بود')}})};
 };
-// PWA: مانیفست و آیکن درون‌فایلی + ثبت service worker برای حالت آفلاین (sw.js)
-(()=>{const svg="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0e8a8c"/><stop offset="1" stop-color="#1fb5a1"/></linearGradient></defs><rect width="100" height="100" rx="24" fill="url(#g)"/><g fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 42l32-19 32 19-32 19z"/><path d="M31 52v17c0 4 8 9 19 9s19-5 19-9V52"/></g></svg>');
-  const p192="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAE0UlEQVR4nO3dTXLbOBRFYTiVsb1Ylzfhn8V6BxmgQrNIipZ0IeC9i/ONetQNAicPkqK2n57fPwtwrz+jF4DcCAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAfvH99jp6CaH9Hb2AuJZ06j+8fHwNXU5QTKBj+8HDKDrEBNo6CYVRtEdAP66cMWS0xhVWSinfb6+33lDcaBUB3Z/CHdn5mfoKa3L8k99okwbUfHJMm9GMV9jj7p0Jb7S5JlCHA55tFM0SUOfZME9G/lfYwPdKM9xo5gENP0L7t/q2AbU6uSbXkHFGT8/vn6PX0Firo1qn84h/pwergBr+KT88aTLa8wmo2+mS0ZpDQENONM4LrLFyBzR2GDCKSuqAgpxfkGWMkjKggGcWcEl9JAso8jlFXtvjpAno0W/RW5ktoxwBpTuVdAu+W/SA8p5E3pXfJG5AHgfg8RQnggZktu9mj7MWLiDjvbb88DpQQMbpLPyeMURAWd6it+KU0fiAnHbzJh4PPjIgjx1UGOzAmIAMNq6h1LvRO6DZXu5cL2lGXb9U33CPzOop7Q6+87f3O02gpH+8hsi1V12vMMtP0tpKt0VZXwP5ZZR0Z3gXFkK6wbNI/zlQ9oayb8LgT6JnHkUezz7+rzKKy1beJPvgWYQIqLLZ03NmjxkooOI+iiyfLlZAleVGmw2eRcSAKpuMbB7kUNyASv6tz77+a4QOqEp6DK531kaCgKpEGSVaqi5NQCXDwcRfYXOZAqrCHtIkd9ZGvoCqUBmFWkxnWQMqMY4twhrGShxQNfAI57yzNqIH1PkbvlceZ89VBS/M5CfVt/qa/TVlMHjWrH5bz8vHl366J79oh3T2rAIq/4+neUa8WL7E5ArbaHujtRo8fvUU14CqIJ/xuKZTOQdUAhyecTqV22ugQ61eGN3xH7VnPoHWup3o8LHX00QBlS5HO0861RRX2MaDbrTZ0qnmmkBrbc97znrKnBNo0WQUTZtONXVA1d0ZTZ5ONe8VtnFrDdRTMYF+XDmKSGeNgLZOMiKdPa6wY/tWqOcQE+iiZRSRzgkm0C+o5xwBQUJAkBAQJAQECQFBQkCQEBAkBAQJAUFCQJAQECQEBAkBQWLydY7997+i/S165/8vtpvoP6Fs7/qTiNNQxjVfyWQCHTr5UVGd12As3wQqwqn0iSn48tpynkB7zb8qbz9gfpVyAhXHk8s4fgpv4yHKGlDSP6+X5H2crAGVzJu+kfpBEgdUkm99lf0R0r8LG/LzD5vInk6VewIt0h1GugVfkn4CLbKMIpt0Kp+AqsgZmaVTuQVUNf8dFwrLbhaeAS0GluTdzcI8oMX6OB8X0yTRrM0S0Nr+mO9LasJc9mYMaI8U7mbyORBGISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCAhIEgICBICgoSAICEgSAgIEgKChIAgISBICAgSAoKEgCD5Byj8ECLh2PbeAAAAAElFTkSuQmCC",p512="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAIAAAB7GkOtAAAPAklEQVR4nO3dQXIjxRqF0WqCMb1Ygk3Q9GLZwRv4PT9jG1klVVVm3nvOiAmBVJX5f8rsAL799udfGwB9fhn9AQAYQwAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQBU+/uP30d/BBjm19EfAMZ4Hf0vf/H9x8+hHwcGcAKg0ccf/o4CFHICoMuNQe8oQBsBoMWdv/FlgB6ugKiw94bHjRANnAAI9/AodxQgngAQ65Bf8TJAMFdAZDr2DseNEJGcAEhz0rB2FCCPAJDjgt/pMkASV0CEuPKWxo0QGZwAWN6QcewoQAABYGHDf4nLAEtzBcSqhk//V/N8EtjFCYD1TDhwHQVYkQCwkglH/1sywFpcAbGMyaf/q1U+JzgBsIDlRqqjAEsQAKa23Oh/SwaYnCsg5rX09H+V8S2I5ATAjMKGpqMAcxIA5hI2+t+SAWbjCoiJBE//Vw3fkVU4ATCFqrHoKMAkBIDBqkb/WzLAcK6AGObvP36vnf6vPAEGEgDGMPheCSGjuALiaobdp9wIcT0nAK7jp+6XPB+uJABcxGi7k0xyGVdAnM44e4AbIS7gBMCJ/Jh9kqfHqQSAsxhehxBRzuMKiOMZWIdzI8QZnAA4kp+rp/JsOZYAcBjj6QISy4FcAXEAI+liboQ4hBMAT/GDdCBPnicJAI8zgIYTYJ7hCohHGDpTcSPEY5wA2MdPzml5L+zlBMAOYSPm9SdzzPdyFGCXb7/9+dfoz8ACYkbki09HZMN3hLdcAfGFvDuff5uMYRMz7K1xBicAbgkbIneO+M5vTSEB4HOGoCdAPFdAvNdz53PG3zWtsHfKIZwA+IewMXHIEPdMSCUA/Jcxd1vS89EAXggAUaPtxUkDLuxByQAC0M5Q28sTI4YA9DLInpH09DSglgA0ShpeL4aMsLDHKAOFBKCOsXUsz5N1CUARo+o8Sc92qgfLqQSgQtJ42madUB4yyxGAfAbTlTxtFiIAyQyjUZKe/EKPnb0EIFPSANrWnEFeAfMTgEBGzzy8C2YmAFGMmzklvZeYl8ImADGSRsyWOGW8ICYkAAkMl1V4U0xFANZmoKwo6a2VvLJUArCqpCGy9c0Rr48ZCMCSjI8M3iNjCcBijIw8Se/UC12LACwjaUxsJsU/ebkMIQBrMCAaeMtcTABmZyi0SXrjXvfkBGBeSYNgMwv28Oq5hgBMygjAGuBsAjAd2563ktaDxTAbAZhI0lbf7PbjWBicRACmELbDN5v8BGGLxAqZgQCMZ2Nzv6TVYqkMJwAjJW3mzX6+imXDUQRgjLA9vNnGlwtbQtbPEAIwgK3LUZLWkoV0PQG4VNJ23ezYOVhUPEwALhK2SzcbdTJhC8zqusYvoz9AhbzNaX/OJuyNhG2ZaTkBnCtsHYdNmUiWHPcTgLOE7cPNVlxK2PKz9k7iCugUedvPDlxL2PsK21DzcAI4WNhKDZsjhSxIbhCAw4TttM1mCxK2OK3Mo7gCOkbeBrPHkoS9zbDtNpATwLPC1mLYpOAdy5W3BOBxYXtps51qhC1d6/ZhroAelLeF7KIeYe86bDNeyQlgt7DVFjYL2MViLicAO4Ttls2GYdu2uIVtVd/PFdC98jaJfcKLsJUQtlVP5QTwtbD1FLbbOZCl3kYAbgnbD5stwR3Clr01f4MroH+Vtw3sBO4Rtk7CNvKxnAA+kbdiwrY01wjbCHbBRwLwr6x+aln8JQTglrBtsNkJfMWaryIAX7MlKBG21K3zLwnAvewNglnenQRgh7BNstknWNXdBGA3G4YYYYvZSt5LAB4UtnM2m6dM2AK2eh8jAE+xi1hO2KLdrNsnCMCzbCdWYa3yjgAcw9ZicmFL1Po8hAAcyR5jQmHLcrMyjyMAB7PZmIfVyG0CcAobj+HCFqEVeAYBOJEdyBAWHncSgHOFbcXNbpyb9cYuAnAF25ILhC0za+wCAnAd+5OTWFo8RgAuFbZRN3t1NCuKZwjAADYthwhbSFbR9QRgmLDdu9nAFwpbPFbOKAIwmJ3MLmELZrNmhhKA8Wxp7hS2VKyT4QRgFmF7e7O9DxW2PKyNSQjAXOxz3glbEptVMRMBmI4Nz6uwxWAlzEYAJhW28zebf6ewBeDtz0kApmYKFAp76Zv3PjEBmJ1xUCXsdXvXkxOANYTNhc1o+CDsFXu/SxCAlZgRkcJe6+bNrkMAFmNYJPE2GUsAlmRwBAh7iYVvMIAALCxsgmw1Q8SLYxICsDajZC3eF1MRgATGyhLCXlPkO2ojADnC5ssWNGK8GuYkAGnCZs3qgybsdWzrvxHeEoBAhs4kwl7Eom+BGwQgVtj02ZYaQGEPf6Enzy4CEM4kuljYA99WeOY8TADyGUmXCXvU0z5njiIALcJm0zbZeAp7vFM9W84jAF3MqcOFPdJtjqfKNQSgjoF1oLCHafS3EYBSYZNru3x4hT1Ao7+TAFQzxR4Q9tA207+YALQzznYJe1xGfzkBYNvi5tp2wmgLe0RGP5sA8FbYjNsOGnMeC6kEgPfC5t2Tw87TINivoz8Ad7lyDH3/8TNp6r18lwcGX9JD2P73BC5eSJf9s3iMAPCJ64fF2XZlIOmLvzCL+dQvoz8A8/r+42fY4LhnsodN/7yXyIGcAPhCz41Q0tfc/OrnDgLA1+JvhJK+2gvTn3sIAPdKzUAYo5/7+TMA9jFfpuW6n70EgN0Mmgl5IzzAFRAPyrsRWpTRz8OcAHiK6TOQoxhPcgLgWY4C1zP3OYQTAMfwa/QynjNHcQLgSE4DpzL6OZYTAMczpw7ngMUZBIBTGFgH8iQ5iSsgTuRG6ElGP6dyAuB0ptgDHKG4gABwBeNsF8+Ka7gC4jpuhL5k9HMlJwCuZsZ9yiGJ6wkAAxh273gaDOEKiGHcCG1GP0M5ATBY7QR0DGI4AWC8wlHY9n2ZkysgZlFyI2T0Mw8nAOYSPB8LDzpMTgCYTuSgzPtGBHAFxKRiboSMfqYlAExt6QwY/UzOFRALWHGSrviZaeMEwBoWOgoY/axCAFjJ5Bkw+lmLKyDWM+ecnfNTwQ1OACxpqqOA0c+iBICFDc+A0c/SXAGxvCFTOPLfVqONAJDg4nFs9JPBFRA5LrgRMvpJ4gRAmpNmtDsf8ggAgQ4f1kY/kVwBEeuQGyGjn2ACQLiHM2D0E88VEBX2TnPTnwZOALS48yhg9NNDAOhyIwNGP21cAdHo46w3/SnkBECp16OA0U8tJwCqmf40EwCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACg1K+jPwDT+fuP3/f+Ld9//Dzjk3DDA68J3hGANTwwYQ0IjiLwqVwBcQCxuZgHziGcADjGy0jyU/FsRj8HEgCOJAPnMfo53Lff/vxr9GfgLMNHhhI8z0vkPE4AnOjt8DJH7jd86FNCALiIGNxm6HM9AWCAj8OuLQnGPTPwZwDhAgbNum3w8JmcEwCzu3OMXjmqAiY7bE4ADUwrHuPnfzz/JjBAKQHI53ccD7BsGghABZuZXSyYEgIAUEoAWvhNx50slR4CUMTG5ksWSRUB6GJ7c4Pl0UYA6tjkfMrCKCQAjWx13rEkOglAKRueVxZDLQHoZduzWQbdBKCazV/OAignAO2MgFpePQKAQdDIS2fz/wPgxcs48B+ObmD088oJgP8zGuJ5xbzlBMA/OAqkMvr5yAmATxgWYbxQPuUEwOccBTIY/dwgANwiA+sy+vmSAPA1GViL0c+dBIB7ycD8jH52EQD2kYE5Gf08QAB4xOu4UYKxzH2eIQA8xYFgFKOf5wkAB3AguIy5z4EEgCMpwUnMfc4gAJxCCQ5h7nMqAeBcSvAAc59rCAAXeTvUxOAjQ5/rCQADiMELQ5+xBIDB3g3B7B6Y+ExFAJhLWA9MfGYmAEzt0wE6ZxXMepYjAKzny1F7RiHMd/IIAIEMa7iH/yUkQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUEoAAEoJAEApAQAoJQAApQQAoJQAAJQSAIBSAgBQSgAASgkAQCkBACglAAClBACglAAAlBIAgFICAFBKAABKCQBAKQEAKCUAAKUEAKCUAACUEgCAUgIAUOo/8X9GDlJIJzYAAAAASUVORK5CYII=";
-  const m={name:'کلاس‌های فوق‌برنامه',short_name:'کلاس‌ها',lang:'fa',dir:'rtl',display:'standalone',background_color:'#f2f6f7',theme_color:'#0e8a8c',icons:[{src:p192,sizes:'192x192',type:'image/png'},{src:p512,sizes:'512x512',type:'image/png'},{src:p512,sizes:'512x512',type:'image/png',purpose:'maskable'},{src:svg,sizes:'any',type:'image/svg+xml'}]};
-  const add=(n,a)=>{const e=document.createElement(n);Object.assign(e,a);document.head.appendChild(e)};
-  try{add('link',{rel:'manifest',href:URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}))})}catch(_){}
-  add('link',{rel:'icon',href:svg});add('link',{rel:'apple-touch-icon',href:p192});
-  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-})();
+/* ===== قفل برنامه (رمز عبور) ===== */
+const PW='cm_pw_v1';
+let hiddenAt=0,failN=0,lockUntil=0;
+const pwNorm=s=>unfa(String(s)).trim();
+function pwGet(){try{const r=JSON.parse(localStorage.getItem(PW));return r&&r.s&&r.h?r:null}catch(_){return null}}
+async function pwHash(pw,salt){
+  const enc=new TextEncoder(),data=enc.encode(salt+'|'+pwNorm(pw));
+  try{if(window.crypto&&crypto.subtle){
+    const k=await crypto.subtle.importKey('raw',data,'PBKDF2',false,['deriveBits']);
+    const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:enc.encode(salt),iterations:100000,hash:'SHA-256'},k,256);
+    return 'a'+Array.from(new Uint8Array(bits)).map(b=>b.toString(16).padStart(2,'0')).join('')}}catch(_){}
+  let h1=0x811c9dc5,h2=0x1b873593;for(const b of data){h1=Math.imul(h1^b,16777619);h2=Math.imul(h2+b,2246822519)}
+  return 'b'+(h1>>>0).toString(16)+(h2>>>0).toString(16);
+}
+async function pwSet(pw){const salt=DB.uid()+DB.uid(),h=await pwHash(pw,salt);localStorage.setItem(PW,JSON.stringify({s:salt,h}))}
+function pwClear(){try{localStorage.removeItem(PW)}catch(_){}}
+async function pwCheck(pw){const r=pwGet();return !!r&&(await pwHash(pw,r.s))===r.h}
+function showLock(){
+  document.querySelectorAll('.modal').forEach(m=>m.remove());
+  if(document.getElementById('lock')){locked=true;return}
+  locked=true;
+  const L=document.createElement('div');L.id='lock';L.className='lock';L.setAttribute('role','dialog');L.setAttribute('aria-modal','true');
+  L.innerHTML=`<div class="lk"><span class="lkb">${ic('lock')}</span><h1>کلاس‌های فوق‌برنامه</h1><p>برای ورود، رمز عبور را وارد کنید</p>
+  <input id="lp" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="current-password" aria-label="رمز عبور" placeholder="رمز عبور" enterkeyhint="go">
+  <div class="lkm" id="lm" role="alert"></div><button class="btn block" id="lg">ورود</button></div>`;
+  document.body.appendChild(L);
+  const i=L.querySelector('#lp'),m=L.querySelector('#lm'),b=L.querySelector('#lg'),box=L.querySelector('.lk');
+  const enter=async()=>{
+    if(Date.now()<lockUntil){m.textContent='چند ثانیه صبر کنید و دوباره تلاش کنید';return}
+    const v=i.value;if(!v)return;
+    b.disabled=true;let ok=false;try{ok=await pwCheck(v)}catch(_){}b.disabled=false;
+    if(ok){failN=0;locked=false;L.remove();render()}
+    else{failN++;i.value='';m.textContent='رمز اشتباه است';box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');
+      if(failN>=5){failN=0;lockUntil=Date.now()+30000;m.textContent='۵ بار اشتباه؛ ۳۰ ثانیه صبر کنید'}i.focus()}
+  };
+  b.onclick=enter;i.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();enter()}};
+  setTimeout(()=>{try{i.focus()}catch(_){}},80);
+}
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){hiddenAt=Date.now();return}
+  if(!locked&&hiddenAt&&Date.now()-hiddenAt>60000&&pwGet())showLock();
+});
+function pwDialog(kind,done){
+  const cur=kind!=='set',nw=kind!=='remove';
+  const w=modal(`<b class="ttl">${ic('lock')}${{set:'فعال‌سازی رمز',change:'تغییر رمز',remove:'حذف رمز'}[kind]}</b>
+  ${cur?'<label>رمز فعلی</label><input id="pc0" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="current-password">':''}
+  ${nw?'<label>رمز جدید (حداقل ۴ رقم)</label><input id="pc1" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="new-password"><label>تکرار رمز جدید</label><input id="pc2" type="password" inputmode="numeric" pattern="[0-9]*" autocomplete="new-password">':''}
+  <div class="row"><button class="btn${kind==='remove'?' red':''}" id="ok">تأیید</button><button class="btn gr" id="no">انصراف</button></div>`);
+  const q=i=>w.querySelector('#'+i);
+  q('no').onclick=()=>w.remove();
+  q('ok').onclick=async()=>{
+    if(cur&&!(await pwCheck(q('pc0').value))){toast('رمز فعلی درست نیست');return}
+    if(nw){const a=q('pc1').value,b=q('pc2').value;
+      if(pwNorm(a).length<4){toast('رمز باید حداقل ۴ رقم باشد');return}
+      if(a!==b){toast('تکرار رمز با رمز جدید یکی نیست');return}
+      await pwSet(a);toast(kind==='set'?'رمز فعال شد':'رمز تغییر کرد')}
+    else{pwClear();toast('رمز حذف شد')}
+    w.remove();done()};
+}
+function secInit(box){
+  const draw=()=>{const on=!!pwGet();
+    box.innerHTML=(on?`<p class="muted">رمز عبور فعال است. هنگام باز کردن برنامه و همچنین بعد از یک دقیقه دور بودن از برنامه، رمز خواسته می‌شود.</p>
+      <div class="row"><button class="btn gr" id="pch">تغییر رمز</button><button class="btn red" id="prm">حذف رمز</button></div>`
+      :`<p class="muted">با فعال‌کردن رمز، هر بار برای ورود به برنامه باید رمز را وارد کنید.</p>
+      <div class="row"><button class="btn" id="pon">${ic('lock')}فعال‌سازی رمز</button></div>`)
+      +`<p class="muted" style="margin-top:12px">توجه: رمز فقط ورود به برنامه را قفل می‌کند و داده‌ها رمزگذاری نمی‌شوند. اگر رمز را فراموش کنید راه بازیابی وجود ندارد (فقط با پاک‌کردن اطلاعات سایت در مرورگر که داده‌ها را هم پاک می‌کند)؛ پس حتماً پشتیبان بگیرید. رمز داخل فایل پشتیبان ذخیره نمی‌شود.</p>`;
+    const b=i=>box.querySelector('#'+i);
+    if(b('pon'))b('pon').onclick=()=>pwDialog('set',draw);
+    if(b('pch'))b('pch').onclick=()=>pwDialog('change',draw);
+    if(b('prm'))b('prm').onclick=()=>pwDialog('remove',draw);
+  };
+  draw();
+}
+
+// آفلاین: ثبت Service Worker و درخواست ذخیره‌سازی پایدار
+if('serviceWorker' in navigator&&location.protocol!=='file:'){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(_){}
+
+// رمز: فقط عدد (فارسی/عربی هم به انگلیسی تبدیل می‌شود)
+document.addEventListener('input',e=>{const t=e.target;if(t&&t.type==='password'){const v=unfa(t.value).replace(/\D/g,'');if(v!==t.value)t.value=v}});
 
 DB.load();
 history.replaceState({p:'home'},'');
-render();
+if(pwGet())showLock();else render();
 if(loadWarn)toast(loadWarn,6000);
 </script>
 </body>
